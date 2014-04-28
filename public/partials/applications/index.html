@@ -1,0 +1,19 @@
+<p>
+	<a href="#/applications/new" title="New Application"><img src="../assets/images/add.png" alt="New Application"/> <span>New Application</span></a>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Public ID</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody ng-repeat="app in applicationList">
+			<tr>
+				<td style="width:240px"><a ng-href="#/applications/edit/{{app.id}}">{{app.name}}</a></td>
+				<td style="width:250px"><span title="Use this identifier in the public API.">{{app.public_id}}</span></td>
+				<td><img class="link" ng-click="deleteApplication(app)"  src="../assets/images/delete.png" title="Delete application" alt="Delete application"/></td>
+			</tr>
+		</tbody>				
+	</table>
+</p>
