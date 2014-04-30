@@ -8,4 +8,5 @@ import (
 func RegisterRoutes(r martini.Router) {
 	web.InitApplicationsRoutes(r)
 	web.InitGroupsRoutes(r)
+	web.InitOperationsRoutes(r)
 }

@@ -3,39 +3,38 @@
 /* Services */
 angular.module('wasab.services', [])
 .value('version', '0.1')
-.service('Notification',['$resource','$rootScope',function($resource, $rootScope){
-
-	return [];
+.factory('WasabRestBuilder',['$resource', function($resource){
+	return {
+		api : function(resourceName, new_options){
+			var options = {
+					byId:{url:'/admin/'+resourceName+'/get/:id', params:{id:'@id'}},
+					query:{url:'/admin/'+resourceName+'/list', isArray:true},
+					create:{url:'/admin/'+resourceName+'/create', method:'POST'},
+					update:{url:'/admin/'+resourceName+'/update', method:'POST'},
+					delete:{url:'/admin/'+resourceName+'/delete/:id', params:{id:'@id'}, method:'POST'}
+				};
+			var res = $resource('/admin/'+resourceName+'/:id', {id:'@id'}, angular.extend(options, new_options || {}));
+			return res;
+		}
+	}
 }])
-.service('ApplicationsRepository',['$resource',function($resource){
-	var res = $resource('/admin/applications/:id', {id:'@id'}, {
-		byId:{url:'/admin/applications/get/:id', params:{id:'@id'}},
-		query:{url:'/admin/applications/list', isArray:true},
-		create:{url:'/admin/applications/create', method:'POST'},
-		update:{url:'/admin/applications/update', method:'POST'},
-		delete:{url:'/admin/applications/delete/:id', params:{id:'@id'}, method:'POST'},
-	});
-	return res;
+.service('ApplicationsRepository',['WasabRestBuilder',function(WasabRestBuilder){
+	return WasabRestBuilder.api('applications');
 }])
-.service('GroupsRepository',['$resource',function($resource){
-	var res = $resource('/admin/groups/:id', {id:'@id'}, {
-		byId:{url:'/admin/groups/get/:id', params:{id:'@id'}},
-		query:{url:'/admin/groups/list', isArray:true},
-		create:{url:'/admin/groups/create', method:'POST'},
-		update:{url:'/admin/groups/update', method:'POST'},
-		delete:{url:'/admin/groups/delete/:id', params:{id:'@id'}, method:'POST'},
-	});	
-	return res;
+.service('GroupsRepository',['WasabRestBuilder',function(WasabRestBuilder){
+	return WasabRestBuilder.api("groups", 
+								{queryByAppId:{url:'/admin/groups/application/:appId',params:{appId:'@appId'}, isArray:true}});
 }])
-.service('OperationsRepository',['$resource',function($resource){
-	return $resource('/admin/operations/:id', {id:'@id'});
+.service('OperationsRepository',['WasabRestBuilder',function(WasabRestBuilder){
+	return WasabRestBuilder.api("operations",
+								{queryByAppId:{url:'/admin/operations/application/:appId',params:{appId:'@appId'}, isArray:true}});
 }])
-.service('RolesRepository',['$resource',function($resource){
-	return $resource('/admin/roles/:id', {id:'@id'});
+.service('RolesRepository',['WasabRestBuilder',function(WasabRestBuilder){
+	return WasabRestBuilder.api('roles');
 }])
-.service('RolesGroupsRepository',['$resource',function($resource){
-	return $resource('/admin/rolesgroups/:id', {id:'@id'});
+.service('RolesGroupsRepository',['WasabRestBuilder',function(WasabRestBuilder){
+	return WasabRestBuilder.api('rolesgroups');
 }])	
-.service('UsersRepository',['$resource',function($resource){
-	return $resource('/admin/users/:id', {id:'@id'});
+.service('UsersRepository',['WasabRestBuilder',function(WasabRestBuilder){
+	return WasabRestBuilder.api('users');
 }])	;

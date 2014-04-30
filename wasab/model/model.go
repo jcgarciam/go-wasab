@@ -38,11 +38,25 @@ type Group struct {
 	ApplicationId int    `json:"application_id" db:"application_id"`
 }
 
+type GroupApplicationJoin struct {
+	Group
+	ApplicationName string `json:"application_name" db:"application_name"`
+}
+
+type Operation struct {
+	Id            int    `json:"id" db:"id"`
+	ApplicationId int    `json:"application_id" db:"application_id"`
+	Code          string `json:"code" db:"code"`
+	Description   string `json:"description" db:"description"`
+}
+type OperationApplicationJoin struct {
+	Operation
+	ApplicationName string `json:"application_name" db:"application_name"`
+}
+
 type GroupOperation struct {
-	Id          int    `json:"id" db:"id"`
-	GroupId     int    `json:"group_id" db:"group_id"`
-	Code        string `json:"code" db:"code"`
-	Description string `json:"description" db:"description"`
+	GroupId     int `json:"group_id" db:"group_id"`
+	OperationId int `json:"operaton_id" db:"operaton_id"`
 }
 
 type Role struct {
@@ -84,7 +98,7 @@ func init() {
 	//
 	dbMap.AddTableWithName(Application{}, "applications").SetKeys(true, "Id")
 	dbMap.AddTableWithName(Group{}, "groups").SetKeys(true, "Id")
-	dbMap.AddTableWithName(GroupOperation{}, "groups_operations").SetKeys(true, "Id")
+	dbMap.AddTableWithName(Operation{}, "operations").SetKeys(true, "Id")
 	dbMap.AddTableWithName(Role{}, "roles").SetKeys(true, "Id")
 	dbMap.AddTableWithName(RoleGroup{}, "roles_group")
 	dbMap.AddTableWithName(User{}, "users").SetKeys(true, "Id")
@@ -107,19 +121,26 @@ func Application_ByPk(id string) Application {
 
 	return apps
 }
-func Group_ByPk(id string) Group {
-	var ret Group
+func Group_ByPk(id string) GroupApplicationJoin {
+	var ret GroupApplicationJoin
+	sql := `select groups.*, applications.name application_name 
+			from groups, applications
+		  	where groups.application_id = applications.id and groups.id = $1`
 
-	err := dbMap.SelectOne(&ret, "select * from groups where id = $1", id)
+	err := dbMap.SelectOne(&ret, sql, id)
 	checkErr(err, "sql.QueryByPk Groups")
 
 	return ret
 }
-func GroupOperation_ByPk(id string) GroupOperation {
-	var ret GroupOperation
+func Operation_ByPk(id string) OperationApplicationJoin {
+	var ret OperationApplicationJoin
 
-	err := dbMap.SelectOne(&ret, "select * from groups_operations where id = $1", id)
-	checkErr(err, "sql.QueryByPk GroupOperation")
+	sql := `select operations.*, applications.name application_name 
+			from groups, operations
+		  	where operations.application_id = applications.id and operations.id = $1`
+
+	err := dbMap.SelectOne(&ret, sql, id)
+	checkErr(err, "sql.QueryByPk Operation")
 
 	return ret
 }
@@ -157,27 +178,27 @@ func Group_List() []Group {
 
 	return apps
 }
-func Group_ListByAppId(appId int) []Group {
+func Group_ListByAppId(appId string) []Group {
 	var apps []Group
 
 	_, err := dbMap.Select(&apps, "select * from groups where application_id = $1 order by id", appId)
-	checkErr(err, "sql.Query Group")
+	checkErr(err, "sql.Query Group by appId")
 
 	return apps
 }
-func GroupOperation_List() []GroupOperation {
-	var apps []GroupOperation
+func Operation_List() []Operation {
+	var apps []Operation
 
-	_, err := dbMap.Select(&apps, "select * from groups_operations order by id")
-	checkErr(err, "sql.Query GroupOperation")
+	_, err := dbMap.Select(&apps, "select * from operations order by id")
+	checkErr(err, "sql.Query Operation")
 
 	return apps
 }
-func GroupOperation_ListByGrpId(grpId int) []GroupOperation {
-	var apps []GroupOperation
+func Operation_ListByAppId(appId string) []Operation {
+	var apps []Operation
 
-	_, err := dbMap.Select(&apps, "select * from groups_operations where group_id = $1 order by id", grpId)
-	checkErr(err, "sql.Query GroupOperation")
+	_, err := dbMap.Select(&apps, "select * from operations where application_id = $1 order by id", appId)
+	checkErr(err, "sql.Query operation by appId")
 
 	return apps
 }
@@ -213,11 +234,11 @@ func Group_Create(grp *Group) error {
 	checkErr(err, "sql.Create Group")
 	return err
 }
-func GroupOperation_Create(grpOper *GroupOperation) error {
-	_, err := dbMap.Exec("insert into groups_operations (group_id, code, description) values($1,$2,$3)",
-		grpOper.GroupId, strings.ToUpper(grpOper.Code), strings.ToUpper(grpOper.Description))
+func Operation_Create(oper *Operation) error {
+	_, err := dbMap.Exec("insert into operations (group_id, application_id, code, description) values($1,$2,$3)",
+		oper.ApplicationId, strings.ToUpper(oper.Code), strings.ToUpper(oper.Description))
 
-	checkErr(err, "sql.Create GroupOperation")
+	checkErr(err, "sql.Create Operation")
 	return err
 }
 func Role_Create(rol *Role) error {
@@ -250,11 +271,11 @@ func Group_Update(grp *Group) error {
 	checkErr(err, "sql.Update Group")
 	return err
 }
-func GroupOperation_Update(grpOpe *GroupOperation) error {
-	_, err := dbMap.Exec("update  groups_operations set group_id = $2, code = $3, description = $4 where id = $1",
-		grpOpe.GroupId, strings.ToUpper(grpOpe.Code), strings.ToUpper(grpOpe.Description))
+func Operation_Update(ope *Operation) error {
+	_, err := dbMap.Exec("update  operations set application_id = $2, code = $3, description = $4 where id = $1",
+		ope.Id, ope.ApplicationId, strings.ToUpper(ope.Code), strings.ToUpper(ope.Description))
 
-	checkErr(err, "sql.Update GroupOperation")
+	checkErr(err, "sql.Update Operation")
 	return err
 }
 func Role_Update(rol *Role) error {
@@ -299,15 +320,15 @@ func Group_Delete(id int) error {
 
 	return err
 }
-func GroupOperation_Delete(id int) error {
-	app := GroupOperation{}
-	err := dbMap.SelectOne(&app, "select id from groups_operations where id = $1", id)
+func Operation_Delete(id int) error {
+	app := Operation{}
+	err := dbMap.SelectOne(&app, "select id from operations where id = $1", id)
 	if err == nil {
 		_, err = dbMap.Delete(&app)
 		if err == nil {
 			return nil
 		}
-		checkErr(err, "sql.Delete GroupOperation")
+		checkErr(err, "sql.Delete Operation")
 	}
 
 	return err

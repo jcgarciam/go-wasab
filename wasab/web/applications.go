@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func InitApplicationsRoutes(r martini.Router) {
@@ -22,6 +23,10 @@ func InitApplicationsRoutes(r martini.Router) {
 
 func getApplication(enc Encoder, r *http.Request, m martini.Params) (int, string) {
 	ret := model.Application_ByPk(m["id"])
+
+	if v, err := strconv.Atoi(m["id"]); err != nil || ret.Id != v {
+		return Result(enc, http.StatusNotFound, "Application not found.")
+	}
 	return Result(enc, http.StatusOK, ret)
 }
 
@@ -37,7 +42,7 @@ func createApplications(enc Encoder, r *http.Request) (int, string) {
 		log.Println("Unable to decode as model.application:", err)
 	}
 
-	if app.Name == "" {
+	if strings.TrimSpace(app.Name) == "" {
 		return Result(enc, http.StatusBadRequest, "Parameter 'name' is required")
 	}
 
@@ -56,7 +61,13 @@ func updateApplications(enc Encoder, r *http.Request) (int, string) {
 	app := model.Application{}
 	err := json.NewDecoder(r.Body).Decode(&app)
 	if err != nil {
-		log.Println("Unable to decode as model.application:", err)
+		fmtError := fmt.Sprintf("Unable to decode as model.application: [%v]", err)
+		log.Println(fmtError)
+		return Result(enc, http.StatusInternalServerError, fmtError)
+	}
+
+	if strings.TrimSpace(app.Name) == "" {
+		return Result(enc, http.StatusBadRequest, "Parameter 'name' is required")
 	}
 
 	err = model.Application_Update(&app)
@@ -83,4 +94,5 @@ func deleteApplication(enc Encoder, r *http.Request, m martini.Params) (int, str
 }
 
 func noop(w http.ResponseWriter, r *http.Request, m martini.Params) {
+
 }

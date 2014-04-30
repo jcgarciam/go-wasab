@@ -330,7 +330,8 @@ select{
 /******** list table ************/
 table.table{
 	width:100%;
-	border:1px solid #c0c0c0
+	border:1px solid #c0c0c0;
+    margin-top: 10px;
 }
 table.table tr th{
 	background-color:#c0c0c0;

@@ -1,0 +1,29 @@
+<p>
+	<a href="#/operations/new" title="New Operation"><img src="../assets/images/add.png" alt="New Operation"/> <span>New Operation</span></a>
+	<div>
+	<div><label for="appName">Filter by Application</label></div>
+	<select id="appName"
+			class="form-control"
+			ng-model="selectedApp" 
+			ng-options="c.name for c in applicationList"
+			ng-change="searchOperations(selectedApp)">
+		
+	</select>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Description</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody ng-repeat="app in operationsList">
+			<tr>
+				<td><a ng-href="#/operations/edit/{{app.id}}">{{app.code}}</a></td>
+				<td>{{app.description}}</td>
+				<td><img class="link" ng-click="deleteOperation(app)"  src="../assets/images/delete.png" title="Delete Operation" alt="Delete Operation"/></td>
+			</tr>
+		</tbody>				
+	</table>
+	</div>
+</p>

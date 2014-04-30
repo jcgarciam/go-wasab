@@ -8,12 +8,14 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func InitGroupsRoutes(r martini.Router) {
 	r.Group("/admin/groups", func(router martini.Router) {
 		router.Get("/get/:id", getGroup)
 		router.Get("/list", getGroups)
+		router.Get("/application/:appId", getGroupsByApplication)
 		router.Post("/create", createGroups)
 		router.Post("/update", updateGroups)
 		router.Post("/delete/:id", deleteGroup)
@@ -22,6 +24,10 @@ func InitGroupsRoutes(r martini.Router) {
 
 func getGroup(enc Encoder, r *http.Request, m martini.Params) (int, string) {
 	ret := model.Group_ByPk(m["id"])
+	if v, err := strconv.Atoi(m["id"]); err != nil || ret.Id != v {
+		return Result(enc, http.StatusNotFound, "Group not found.")
+	}
+
 	return Result(enc, http.StatusOK, ret)
 }
 
@@ -30,6 +36,10 @@ func getGroups(enc Encoder, r *http.Request) (int, string) {
 	return Result(enc, http.StatusOK, ret)
 }
 
+func getGroupsByApplication(enc Encoder, r *http.Request, m martini.Params) (int, string) {
+	ret := model.Group_ListByAppId(m["appId"])
+	return Result(enc, http.StatusOK, ret)
+}
 func createGroups(enc Encoder, r *http.Request) (int, string) {
 	grp := model.Group{}
 	err := json.NewDecoder(r.Body).Decode(&grp)
@@ -37,7 +47,7 @@ func createGroups(enc Encoder, r *http.Request) (int, string) {
 		log.Println("Unable to decode as model.Group:", err)
 	}
 
-	if grp.Name == "" {
+	if strings.TrimSpace(grp.Name) == "" {
 		return Result(enc, http.StatusBadRequest, "Parameter 'name' is required")
 	}
 
@@ -55,7 +65,13 @@ func updateGroups(enc Encoder, r *http.Request) (int, string) {
 	grp := model.Group{}
 	err := json.NewDecoder(r.Body).Decode(&grp)
 	if err != nil {
-		log.Println("Unable to decode as model.Group:", err)
+		fmtError := fmt.Sprintf("Unable to decode as model.Group: [%v]", err)
+		log.Println(fmtError)
+		return Result(enc, http.StatusInternalServerError, fmtError)
+	}
+
+	if strings.TrimSpace(grp.Name) == "" {
+		return Result(enc, http.StatusBadRequest, "Parameter 'name' is required")
 	}
 
 	err = model.Group_Update(&grp)

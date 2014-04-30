@@ -17,8 +17,14 @@ angular.module('wasab', [
   $routeProvider.when('/applications/edit/:id',  { templateUrl: 'partials/applications/edit.html', controller:'ApplicationsEditCtrl'});  
 
   $routeProvider.when('/groups',  {templateUrl: 'partials/groups/index.html', controller : 'GroupsCtrl'});
+  $routeProvider.when('/groups/application/:appId',  {templateUrl: 'partials/groups/index.html', controller : 'GroupsCtrl'});
   $routeProvider.when('/groups/new',  {templateUrl: 'partials/groups/add.html', controller:'GroupsNewCtrl'});
   $routeProvider.when('/groups/edit/:id',  { templateUrl: 'partials/groups/edit.html', controller:'GroupsEditCtrl'});  
+
+  $routeProvider.when('/operations',  {templateUrl: 'partials/operations/index.html', controller : 'OperationsCtrl'});
+  $routeProvider.when('/operations/application/:appId',  {templateUrl: 'partials/operations/index.html', controller : 'OperationsCtrl'});
+  $routeProvider.when('/operations/new',  {templateUrl: 'partials/operations/add.html', controller:'OperationsNewCtrl'});
+  $routeProvider.when('/operations/edit/:id',  { templateUrl: 'partials/operations/edit.html', controller:'OperationsEditCtrl'});  
 
   $routeProvider.otherwise({redirectTo: '/dashboard'});
 }])
