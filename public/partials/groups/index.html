@@ -2,13 +2,21 @@
 	<a href="#/groups/new" title="New Group"><img src="../assets/images/add.png" alt="New Group"/> <span>New Group</span></a>
 	<div>
 	<div><label for="appName">Filter by Application</label></div>
-	<select id="appName"
-			class="form-control"
-			ng-model="selectedApp" 
-			ng-options="c.name for c in applicationList"
-			ng-change="searchGroups(selectedApp)">
-		
-	</select>
+	<div class="form-group">
+		<select id="appName"
+				class="form-control"
+				ng-model="selectedApp" 
+				ng-options="c.name for c in applicationList"
+				ng-change="searchGroups(selectedApp)">
+			
+		</select>
+	</div>
+	<div class="form-group" ng-show="groupsList.length > 0">
+		<label for="searchGroupName">Search for your Group</label>
+		<input id="searchGroupName" class="form-control" type="text"
+				ng-model="searchGroupName"
+				name="searchGroupName" placeholder="Search for your Group" />
+	</div>	
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -16,9 +24,9 @@
 				<th></th>
 			</tr>
 		</thead>
-		<tbody ng-repeat="app in groupsList">
+		<tbody ng-repeat="app in filteredGroupsList = (groupsList | filter:{name : searchGroupName})">
 			<tr>
-				<td style="width:100%"><a ng-href="#/groups/edit/{{app.id}}">{{app.name}}</a></td>
+				<td style="width:95%"><a ng-href="#/groups/edit/{{app.id}}">{{app.name}}</a></td>
 				<td><img class="link" ng-click="deleteGroup(app)"  src="../assets/images/delete.png" title="Delete Group" alt="Delete Group"/></td>
 			</tr>
 		</tbody>				

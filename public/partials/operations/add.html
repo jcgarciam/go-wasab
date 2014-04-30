@@ -1,4 +1,4 @@
-<form name="form" role="form" ng-submit="AddGroup()" novalidate>
+<form name="form" role="form" ng-submit="AddOperation()" novalidate>
 	<div class="form-group">
 		<div>
 			<label for="appName">Select your Application</label>	
@@ -12,12 +12,19 @@
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="grpname">Set your new Group name</label>
-		<input id="grpname" class="form-control" type="text" ng-model="newgrp.name" name="grpname" placeholder="Group Name"/>
-	   <div ng-show="form.grpname.$dirty && form.grpname.$invalid">Invalid:
-	      <span ng-show="form.grpname.$error.required">Please provide a group name.</span>
+		<label for="operCode">Set your new Operation Code</label>
+		<input id="operCode" class="form-control" type="text" ng-model="newoper.code" name="operCode" placeholder="Operation Code"/>
+	   <div ng-show="form.operCode.$dirty && form.operCode.$invalid">Invalid:
+	      <span ng-show="form.operCode.$error.required">Please provide a operation code.</span>
 	    </div>
 	</div>
+	<div class="form-group">
+		<label for="operDescription">Set your new Operation Description</label>
+		<input id="operDescription" class="form-control" type="text" ng-model="newoper.description" name="operDescription" placeholder="Operation Description"/>
+	   <div ng-show="form.operDescription.$dirty && form.operDescription.$invalid">Invalid:
+	      <span ng-show="form.operDescription.$error.required">Please provide a operation description.</span>
+	    </div>
+	</div>	
 	<div class="form-button">
 		<input type="submit" value="Save" class="btn btn-primary" />
 		<a href="#/groups" class="btn btn-danger">Cancel</a>

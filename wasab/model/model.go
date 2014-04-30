@@ -235,7 +235,7 @@ func Group_Create(grp *Group) error {
 	return err
 }
 func Operation_Create(oper *Operation) error {
-	_, err := dbMap.Exec("insert into operations (group_id, application_id, code, description) values($1,$2,$3)",
+	_, err := dbMap.Exec("insert into operations (application_id, code, description) values($1,$2,$3)",
 		oper.ApplicationId, strings.ToUpper(oper.Code), strings.ToUpper(oper.Description))
 
 	checkErr(err, "sql.Create Operation")

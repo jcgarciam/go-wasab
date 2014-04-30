@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.4
 -- Dumped by pg_dump version 9.3.4
--- Started on 2014-04-30 12:57:55
+-- Started on 2014-04-30 17:37:10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -384,21 +384,21 @@ ALTER TABLE ONLY groups_operations
 
 
 --
--- TOC entry 1901 (class 2606 OID 34392)
--- Name: operations_code_key; Type: CONSTRAINT; Schema: public; Owner: dev; Tablespace: 
+-- TOC entry 1901 (class 2606 OID 34415)
+-- Name: operations_application_id_code_key; Type: CONSTRAINT; Schema: public; Owner: dev; Tablespace: 
 --
 
 ALTER TABLE ONLY operations
-    ADD CONSTRAINT operations_code_key UNIQUE (code);
+    ADD CONSTRAINT operations_application_id_code_key UNIQUE (application_id, code);
 
 
 --
--- TOC entry 1903 (class 2606 OID 34394)
--- Name: operations_description_key; Type: CONSTRAINT; Schema: public; Owner: dev; Tablespace: 
+-- TOC entry 1903 (class 2606 OID 34413)
+-- Name: operations_application_id_description_key; Type: CONSTRAINT; Schema: public; Owner: dev; Tablespace: 
 --
 
 ALTER TABLE ONLY operations
-    ADD CONSTRAINT operations_description_key UNIQUE (description);
+    ADD CONSTRAINT operations_application_id_description_key UNIQUE (application_id, description);
 
 
 --
@@ -557,7 +557,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-04-30 12:57:55
+-- Completed on 2014-04-30 17:37:10
 
 --
 -- PostgreSQL database dump complete

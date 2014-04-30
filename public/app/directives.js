@@ -47,8 +47,7 @@ angular.module('wasab.directives', [])
         restrict: 'A',
         link: function(scope, el) {
             scope.$on("focus",function(event, selector){
-                console.log(event);
-                var found = document.querySelector(selector);
+                var found = angular.element(selector);
                 if(found !== undefined && found !== null){
                     found.focus();
                 }

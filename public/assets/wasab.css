@@ -13,7 +13,7 @@ body {
     text-align: center;
     color: #303030;
     background: #e8eaec;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 a {
@@ -64,7 +64,7 @@ img.right {
 
 #header {
     height: 110px;
-    width: 754px;
+    width: 100%;
     margin: 0 1px 1px 1px;
     background: #467aa7;
     color: #ffffff;
@@ -92,7 +92,7 @@ img.right {
 #navigation {
     height: 2.2em;
     line-height: 2.2em;
-    width: 754px;
+    width: 100%;
     margin: 0 1px;
     background: #578bb8;
     color: #ffffff;
@@ -132,8 +132,7 @@ img.right {
 /**************** Content styles ****************/
 
 #content {
-    float: left;
-    width: 530px;
+    width: 98%;
     font-size: 0.9em;
     padding: 20px 0 0 20px;
 }
@@ -176,16 +175,15 @@ img.right {
 /**************** Sidebar styles ****************/
 
 #subcontent {
-    float: right;
     width: 170px;
-    padding: 20px 20px 10px 0;
+/*    padding: 20px 20px 10px 0;  */
     line-height: 1.4em;
 }
 
 #subcontent h2 {
     display: block;
     margin: 0 0 15px 0;
-    font-size: 1.6em;
+    font-size: 1.7em;
     font-weight: normal;
     text-align: left;
     letter-spacing: -1px;
@@ -195,14 +193,13 @@ img.right {
 
 #subcontent p {
     margin: 0 0 16px 0;
-    font-size: 0.9em;
 }
 
 /**************** Menublock styles ****************/
 
 .menublock {
     margin: 0 0 20px 8px;
-    font-size: 0.9em;
+    font-size: 1.0em;
 }
 .menublock li {
     list-style: none;
@@ -258,7 +255,7 @@ img.right {
 
 #footer {
     clear: both;
-    width: 754px;
+    width: 100%;
     padding: 5px 0;
     margin: 0 1px;
     font-size: 0.9em;

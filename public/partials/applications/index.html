@@ -10,9 +10,9 @@
 		</thead>
 		<tbody ng-repeat="app in applicationList">
 			<tr>
-				<td style="width:240px"><a ng-href="#/applications/edit/{{app.id}}">{{app.name}}</a></td>
-				<td style="width:250px"><span title="Use this identifier in the public API.">{{app.public_id}}</span></td>
-				<td><img class="link" ng-click="deleteApplication(app)"  src="../assets/images/delete.png" title="Delete application" alt="Delete application"/></td>
+				<td style="width:45%"><a ng-href="#/applications/edit/{{app.id}}">{{app.name}}</a></td>
+				<td style="width:45%"><span title="Use this identifier in the public API.">{{app.public_id}}</span></td>
+				<td style="width:5%"><img class="link" ng-click="deleteApplication(app)"  src="../assets/images/delete.png" title="Delete application" alt="Delete application"/></td>
 			</tr>
 		</tbody>				
 	</table>

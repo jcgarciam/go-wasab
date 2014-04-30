@@ -166,14 +166,14 @@ angular.module('wasab.controllers', [])
 				}
 			}
 	}])	
-/*	.controller('OperationsNewCtrl', ['$scope','$location','ApplicationsRepository',
+	.controller('OperationsNewCtrl', ['$scope','$location','ApplicationsRepository',
 		'OperationsRepository',
 		function($scope, $location, ApplicationsRepository, OperationsRepository) {
 			$scope.applicationList  = ApplicationsRepository.query();
 			$scope.AddOperation = function(){
 				var oper = new OperationsRepository($scope.newoper);
 				oper.application_id = $scope.selectedApp.id;
-				var result = OperationsRepository.create(grp);
+				var result = OperationsRepository.create(oper);
 				result.$promise.then(function(){
 					$location.path("/operations");
 				});
@@ -205,6 +205,5 @@ angular.module('wasab.controllers', [])
 					$location.path("/operations/application/"+oper.application_id);
 				});
 			}		
-	}])
-*/;
+	}]);
 
