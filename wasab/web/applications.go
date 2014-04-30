@@ -30,10 +30,6 @@ func getApplications(enc Encoder, r *http.Request) (int, string) {
 	return Result(enc, http.StatusOK, ret)
 }
 
-func parse(r *http.Request, v interface{}) {
-
-}
-
 func createApplications(enc Encoder, r *http.Request) (int, string) {
 	app := model.Application{}
 	err := json.NewDecoder(r.Body).Decode(&app)

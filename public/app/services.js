@@ -18,7 +18,14 @@ angular.module('wasab.services', [])
 	return res;
 }])
 .service('GroupsRepository',['$resource',function($resource){
-	return $resource('/admin/groups/:id', {id:'@id'});
+	var res = $resource('/admin/groups/:id', {id:'@id'}, {
+		byId:{url:'/admin/groups/get/:id', params:{id:'@id'}},
+		query:{url:'/admin/groups/list', isArray:true},
+		create:{url:'/admin/groups/create', method:'POST'},
+		update:{url:'/admin/groups/update', method:'POST'},
+		delete:{url:'/admin/groups/delete/:id', params:{id:'@id'}, method:'POST'},
+	});	
+	return res;
 }])
 .service('OperationsRepository',['$resource',function($resource){
 	return $resource('/admin/operations/:id', {id:'@id'});

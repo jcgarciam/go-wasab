@@ -324,6 +324,9 @@ img.right {
 img.link{
     cursor: pointer;
 }
+select{
+    min-width: 250px;
+}
 /******** list table ************/
 table.table{
 	width:100%;
@@ -356,8 +359,3 @@ div.form-button{
 	padding-top: 10px;
 	border-top: 1px solid #c0c0c0
 }
-/*
-input[type="submit"], input[type="button"], .button{
-	width: 80px;
-	height:20px;
-}*/
