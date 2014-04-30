@@ -1,0 +1,14 @@
+<form name="form" role="form" ng-submit="AddApplication()" novalidate>
+	<div class="form-group">
+		<label for="newapp.name">Set your new Application name</label>
+		<input id="appname" class="form-control" type="text" ng-model="newapp.name" name="appname" placeholder="Application Name" focus-on-load/>
+
+	   <div ng-show="form.appname.$dirty && form.appname.$invalid">Invalid:
+	      <span ng-show="form.appname.$error.required">Please provide an application name.</span>
+	    </div>
+	</div>
+	<div class="form-button">
+		<input type="submit" value="Save" class="btn btn-primary" />
+		<a href="#/applications" class="btn btn-danger">Cancel</a>
+	</div>
+</form>
