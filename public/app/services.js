@@ -30,7 +30,8 @@ angular.module('wasab.services', [])
 								{queryByAppId:{url:'/admin/operations/application/:appId',params:{appId:'@appId'}, isArray:true}});
 }])
 .service('RolesRepository',['WasabRestBuilder',function(WasabRestBuilder){
-	return WasabRestBuilder.api('roles');
+	return WasabRestBuilder.api('roles',
+								{queryByAppId:{url:'/admin/roles/application/:appId',params:{appId:'@appId'}, isArray:true}});
 }])
 .service('RolesGroupsRepository',['WasabRestBuilder',function(WasabRestBuilder){
 	return WasabRestBuilder.api('rolesgroups');

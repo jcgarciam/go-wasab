@@ -1,0 +1,18 @@
+<div ng-class="{hide: pagedList.length == 0}">
+	<div class="clearfix"></div>
+	<div class="pull-right">
+		<ul class="pagination" style="margin:0px">
+			<li>
+			    <a href ng-click="prevPage(pagedList.length)">« Prev</a>
+			</li>
+			<li>
+			    <a href ng-click="nextPage(pagedList.length)" next-page>Next »</a>
+			</li>
+		</ul>
+	</div>
+	<div class="clearfix"></div>
+	<div class="pull-right">
+			<span class="paging-info">Showing max. {{itemsPerPage}} of {{totalElements}} Records for Page {{currentPage + 1}} of {{pagedList.length}} Pages</span>
+	</div>
+	<div class="clearfix"></div>	
+</div>

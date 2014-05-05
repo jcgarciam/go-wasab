@@ -51,7 +51,7 @@ angular.module('wasab.directives', [])
                 if(found !== undefined && found !== null){
                     found.focus();
                 }
-            })
+            });
         }
     }
- }])
+ }]);

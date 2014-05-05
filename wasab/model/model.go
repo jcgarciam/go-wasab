@@ -60,9 +60,10 @@ type GroupOperation struct {
 }
 
 type Role struct {
-	Id      int    `json:"id" db:"id"`
-	Name    string `json:"name" db:"name"`
-	Enabled bool   `json:"enabled" db:"enabled"`
+	Id            int    `json:"id" db:"id"`
+	ApplicationId int    `json:"application_id" db:"application_id"`
+	Name          string `json:"name" db:"name"`
+	Enabled       bool   `json:"enabled" db:"enabled"`
 }
 
 type RoleGroup struct {
@@ -206,6 +207,14 @@ func Role_List() []Role {
 
 	_, err := dbMap.Select(&apps, "select * from roles order by id")
 	checkErr(err, "sql.Query Role")
+
+	return apps
+}
+func Role_ListByAppId(appId string) []Role {
+	var apps []Role
+
+	_, err := dbMap.Select(&apps, "select * from roles where application_id = $1 order by id", appId)
+	checkErr(err, "sql.Query Role by appId")
 
 	return apps
 }

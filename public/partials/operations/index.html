@@ -1,43 +1,39 @@
 <p>
 	<a href="#/operations/new" title="New Operation"><img src="../assets/images/add.png" alt="New Operation"/> <span>New Operation</span></a>
 	<div>
-	<div><label for="appName">Filter by Application</label></div>
-	<div class="form-group">
-		<select id="appName"
-				class="form-control"
-				ng-model="selectedApp" 
-				ng-options="c.name for c in applicationList"
-				ng-change="searchOperations(selectedApp)">
-			
-		</select>
-	</div>
-	<div class="form-group" ng-show="operationsList.length > 0">
-		<label for="searchOperationCode">Search for a Code</label>
-		<input id="searchOperationCode" class="form-control" type="text"
-				ng-model="searchOperationCode"
-				name="searchOperationCode" placeholder="Search for a Code" />
-	</div>	
-	<div class="form-group" ng-show="operationsList.length > 0">
-		<label for="searchOperationName">Search for a Description</label>
-		<input id="searchOperationName" class="form-control" type="text"
-				ng-model="searchOperationName"
-				name="searchOperationName" placeholder="Search for a Description" />
-	</div>		
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Code</th>
-				<th>Description</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody ng-repeat="app in filteredOperationsList = (operationsList | filter:{code:searchOperationCode, description : searchOperationName})">
-			<tr>
-				<td style="width:45%"><a ng-href="#/operations/edit/{{app.id}}" title="{{app.description}}">{{app.code}}</a></td>
-				<td style="width:45%">{{app.description}}</td>
-				<td style="width:5%"><img class="link" ng-click="deleteOperation(app)"  src="../assets/images/delete.png" title="Delete Operation" alt="Delete Operation"/></td>
-			</tr>
-		</tbody>				
-	</table>
+		<div><label for="appName">Filter by Application</label></div>
+		<div class="form-group">
+			<select id="appName"
+					class="form-control"
+					ng-model="selectedApp" 
+					ng-options="c.name for c in applicationList"
+					ng-change="searchOperationsByApp(selectedApp)">
+				
+			</select>
+		</div>
+		<div class="form-group" ng-show="operationsList.length > 0">
+			<label for="searchOperation">Search for an Operation</label>
+			<input id="searchOperation" class="form-control" type="text"
+					ng-model="searchOperation"
+					ng-change="filterByOperation(searchOperation)"
+					name="searchOperation" placeholder="Search for an Operation" />
+		</div>		
+		<div ng-include="'partials/header_pagination.html'"></div>	
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Code</th>
+					<th>Description</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="app in  pagedList[currentPage]">
+				<tr>
+					<td style="width:45%"><a ng-href="#/operations/edit/{{app.id}}" title="{{app.description}}">{{app.code}}</a></td>
+					<td style="width:45%">{{app.description}}</td>
+					<td style="width:5%"><img class="link" ng-click="deleteOperation(app)"  src="../assets/images/delete.png" title="Delete Operation" alt="Delete Operation"/></td>
+				</tr>
+			</tbody>				
+		</table>
 	</div>
 </p>

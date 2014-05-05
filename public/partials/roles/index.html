@@ -1,0 +1,37 @@
+<p>
+	<a href="#/Roles/new" title="New Role"><img src="../assets/images/add.png" alt="New Role"/> <span>New Role</span></a>
+	<div>
+		<div><label for="appName">Filter by Application</label></div>
+		<div class="form-Role">
+			<select id="appName"
+					class="form-control"
+					ng-model="selectedApp" 
+					ng-options="c.name for c in applicationList"
+					ng-change="searchRolesByApp(selectedApp)">
+				
+			</select>
+		</div>
+		<div class="form-Role">
+			<label for="filterRoleName">Filter for your Role</label>
+			<input id="filterRoleName" class="form-control" type="text"
+					ng-model="filterRoleName"
+					ng-change="filterByRole(filterRoleName)"
+					name="filterRoleName" placeholder="Filter for your Role" />
+		</div>			
+		<div ng-include="'partials/header_pagination.html'"></div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="app in pagedList[currentPage]">
+				<tr>
+					<td style="width:95%"><a ng-href="#/Roles/edit/{{app.id}}">{{app.name}}</a></td>
+					<td><img class="link" ng-click="deleteRole(app)"  src="../assets/images/delete.png" title="Delete Role" alt="Delete Role"/></td>
+				</tr>
+			</tbody>				
+		</table>			
+	</div>
+</p>

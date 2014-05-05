@@ -15,23 +15,10 @@
 			<label for="filterGroupName">Filter for your Group</label>
 			<input id="filterGroupName" class="form-control" type="text"
 					ng-model="filterGroupName"
-					ng-change="filterByGroupName(filterGroupName)"
+					ng-change="filterByGroup(filterGroupName)"
 					name="filterGroupName" placeholder="Filter for your Group" />
 		</div>			
-		<div class="pull-right">
-			<ul class="pagination" style="margin:0px">
-				<li>
-				    <a href ng-click="prevPage(groupedPagedList.length)">« Prev</a>
-				</li>
-				<li>
-				    <a href ng-click="nextPage(groupedPagedList.length)">Next »</a>
-				</li>
-			</ul>
-		</div>
-		<div class="clearfix"></div>
-		<div class="pull-right">
-				<span ng-class="{hide: groupsList.length == 0}">Showing {{itemsPerPage}} Records for Page {{currentPage + 1}} of {{groupedPagedList.length}} Pages</span>
-		</div>
+		<div ng-include="'partials/header_pagination.html'"></div>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -39,7 +26,7 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody ng-repeat="app in groupedPagedList[currentPage]">
+			<tbody ng-repeat="app in pagedList[currentPage]">
 				<tr>
 					<td style="width:95%"><a ng-href="#/groups/edit/{{app.id}}">{{app.name}}</a></td>
 					<td><img class="link" ng-click="deleteGroup(app)"  src="../assets/images/delete.png" title="Delete Group" alt="Delete Group"/></td>

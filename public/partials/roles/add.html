@@ -1,0 +1,25 @@
+<form name="form" role="form" ng-submit="AddGroup()" novalidate>
+	<div class="form-group">
+		<div>
+			<label for="appName">Select your Application</label>	
+		</div>
+		<select id="appName"
+				class="form-control"
+				ng-model="selectedApp" 
+				ng-options="c.name for c in applicationList"
+				focus-on-load>
+			
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="grpname">Set your new Group name</label>
+		<input id="grpname" class="form-control" type="text" ng-model="newgrp.name" name="grpname" placeholder="Group Name"/>
+	   <div ng-show="form.grpname.$dirty && form.grpname.$invalid">Invalid:
+	      <span ng-show="form.grpname.$error.required">Please provide a group name.</span>
+	    </div>
+	</div>
+	<div class="form-button">
+		<input type="submit" value="Save" class="btn btn-primary" />
+		<a href="#/groups" class="btn btn-danger">Cancel</a>
+	</div>
+</form>

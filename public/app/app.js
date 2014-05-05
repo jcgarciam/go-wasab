@@ -26,6 +26,11 @@ angular.module('wasab', [
   $routeProvider.when('/operations/new',  {templateUrl: 'partials/operations/add.html', controller:'OperationsNewCtrl'});
   $routeProvider.when('/operations/edit/:id',  { templateUrl: 'partials/operations/edit.html', controller:'OperationsEditCtrl'});  
 
+  $routeProvider.when('/roles',  {templateUrl: 'partials/roles/index.html', controller : 'RolesCtrl'});
+  $routeProvider.when('/roles/application/:appId',  {templateUrl: 'partials/roles/index.html', controller : 'RolesCtrl'});
+  $routeProvider.when('/roles/new',  {templateUrl: 'partials/roles/add.html', controller:'RolesNewCtrl'});
+  $routeProvider.when('/roles/edit/:id',  { templateUrl: 'partials/roles/edit.html', controller:'RolesEditCtrl'});  
+
   $routeProvider.otherwise({redirectTo: '/dashboard'});
 }])
 .config(['$httpProvider', function($httpProvider) {
