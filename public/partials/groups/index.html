@@ -1,35 +1,50 @@
 <p>
 	<a href="#/groups/new" title="New Group"><img src="../assets/images/add.png" alt="New Group"/> <span>New Group</span></a>
 	<div>
-	<div><label for="appName">Filter by Application</label></div>
-	<div class="form-group">
-		<select id="appName"
-				class="form-control"
-				ng-model="selectedApp" 
-				ng-options="c.name for c in applicationList"
-				ng-change="searchGroups(selectedApp)">
-			
-		</select>
-	</div>
-	<div class="form-group" ng-show="groupsList.length > 0">
-		<label for="searchGroupName">Search for your Group</label>
-		<input id="searchGroupName" class="form-control" type="text"
-				ng-model="searchGroupName"
-				name="searchGroupName" placeholder="Search for your Group" />
-	</div>	
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody ng-repeat="app in filteredGroupsList = (groupsList | filter:{name : searchGroupName})">
-			<tr>
-				<td style="width:95%"><a ng-href="#/groups/edit/{{app.id}}">{{app.name}}</a></td>
-				<td><img class="link" ng-click="deleteGroup(app)"  src="../assets/images/delete.png" title="Delete Group" alt="Delete Group"/></td>
-			</tr>
-		</tbody>				
-	</table>
+		<div><label for="appName">Filter by Application</label></div>
+		<div class="form-group">
+			<select id="appName"
+					class="form-control"
+					ng-model="selectedApp" 
+					ng-options="c.name for c in applicationList"
+					ng-change="searchGroupsByApp(selectedApp)">
+				
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="filterGroupName">Filter for your Group</label>
+			<input id="filterGroupName" class="form-control" type="text"
+					ng-model="filterGroupName"
+					ng-change="filterByGroupName(filterGroupName)"
+					name="filterGroupName" placeholder="Filter for your Group" />
+		</div>			
+		<div class="pull-right">
+			<ul class="pagination" style="margin:0px">
+				<li>
+				    <a href ng-click="prevPage(groupedPagedList.length)">« Prev</a>
+				</li>
+				<li>
+				    <a href ng-click="nextPage(groupedPagedList.length)">Next »</a>
+				</li>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+		<div class="pull-right">
+				<span ng-class="{hide: groupsList.length == 0}">Showing {{itemsPerPage}} Records for Page {{currentPage + 1}} of {{groupedPagedList.length}} Pages</span>
+		</div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="app in groupedPagedList[currentPage]">
+				<tr>
+					<td style="width:95%"><a ng-href="#/groups/edit/{{app.id}}">{{app.name}}</a></td>
+					<td><img class="link" ng-click="deleteGroup(app)"  src="../assets/images/delete.png" title="Delete Group" alt="Delete Group"/></td>
+				</tr>
+			</tbody>				
+		</table>			
 	</div>
 </p>

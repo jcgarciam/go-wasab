@@ -103,7 +103,6 @@ func init() {
 	dbMap.AddTableWithName(RoleGroup{}, "roles_group")
 	dbMap.AddTableWithName(User{}, "users").SetKeys(true, "Id")
 	dbMap.AddTableWithName(UserRole{}, "users_roles")
-
 }
 
 func checkErr(err error, msg string) {
