@@ -1,5 +1,5 @@
 <p>
-	<a href="#/Roles/new" title="New Role"><img src="../assets/images/add.png" alt="New Role"/> <span>New Role</span></a>
+	<a href="#/roles/new" title="New Role"><img src="../assets/images/add.png" alt="New Role"/> <span>New Role</span></a>
 	<div>
 		<div><label for="appName">Filter by Application</label></div>
 		<div class="form-Role">
@@ -28,7 +28,7 @@
 			</thead>
 			<tbody ng-repeat="app in pagedList[currentPage]">
 				<tr>
-					<td style="width:95%"><a ng-href="#/Roles/edit/{{app.id}}">{{app.name}}</a></td>
+					<td style="width:95%"><a ng-href="#/roles/edit/{{app.id}}">{{app.name}}</a></td>
 					<td><img class="link" ng-click="deleteRole(app)"  src="../assets/images/delete.png" title="Delete Role" alt="Delete Role"/></td>
 				</tr>
 			</tbody>				

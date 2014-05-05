@@ -1,4 +1,4 @@
-<form name="form" role="form" ng-submit="EditGroup()" novalidate>
+<form name="form" role="form" ng-submit="EditRole()" novalidate>
 	<div class="form-group">
 		<div>
 			<label for="appName">Select your Application</label>	
@@ -12,8 +12,8 @@
 		</select>
 	</div>	
 	<div class="form-group">
-		<label for="editgroupName">Change your Application name</label>
-		<input id="editgroupName" class="form-control" type="text" ng-model="editapp.name" name="editgroupName" placeholder="Group Name" focus-on-load />
+		<label for="editRoleName">Change your Application name</label>
+		<input id="editRoleName" class="form-control" type="text" ng-model="editapp.name" name="editgroupName" placeholder="Group Name" focus-on-load />
 	   <div ng-show="form.editgroupName.$dirty && form.editgroupName.$invalid">Invalid:
 	      <span ng-show="form.editgroupName.$error.required">Please provide a group name.</span>
 	    </div>

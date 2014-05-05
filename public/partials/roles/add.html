@@ -1,4 +1,4 @@
-<form name="form" role="form" ng-submit="AddGroup()" novalidate>
+<form name="form" role="form" ng-submit="AddRole()" novalidate>
 	<div class="form-group">
 		<div>
 			<label for="appName">Select your Application</label>	
@@ -12,14 +12,14 @@
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="grpname">Set your new Group name</label>
-		<input id="grpname" class="form-control" type="text" ng-model="newgrp.name" name="grpname" placeholder="Group Name"/>
-	   <div ng-show="form.grpname.$dirty && form.grpname.$invalid">Invalid:
-	      <span ng-show="form.grpname.$error.required">Please provide a group name.</span>
+		<label for="roleName">Set your new Role name</label>
+		<input id="roleName" class="form-control" type="text" ng-model="newgrp.name" name="roleName" placeholder="Role Name"/>
+	   <div ng-show="form.roleName.$dirty && form.roleName.$invalid">Invalid:
+	      <span ng-show="form.roleName.$error.required">Please provide a Role name.</span>
 	    </div>
 	</div>
 	<div class="form-button">
 		<input type="submit" value="Save" class="btn btn-primary" />
-		<a href="#/groups" class="btn btn-danger">Cancel</a>
+		<a href="#/roles" class="btn btn-danger">Cancel</a>
 	</div>
 </form>
