@@ -2,7 +2,7 @@
 	<a href="#/roles/new" title="New Role"><img src="../assets/images/add.png" alt="New Role"/> <span>New Role</span></a>
 	<div>
 		<div><label for="appName">Filter by Application</label></div>
-		<div class="form-Role">
+		<div class="form-group">
 			<select id="appName"
 					class="form-control"
 					ng-model="selectedApp" 
@@ -11,7 +11,7 @@
 				
 			</select>
 		</div>
-		<div class="form-Role">
+		<div class="form-group" ng-show="rolesList.length > 0">
 			<label for="filterRoleName">Filter for your Role</label>
 			<input id="filterRoleName" class="form-control" type="text"
 					ng-model="filterRoleName"
@@ -23,12 +23,14 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<th style="text-align:center">Enabled</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody ng-repeat="app in pagedList[currentPage]">
 				<tr>
-					<td style="width:95%"><a ng-href="#/roles/edit/{{app.id}}">{{app.name}}</a></td>
+					<td style="width:90%"><a ng-href="#/roles/edit/{{app.id}}">{{app.name}}</a></td>
+					<td style="width:90%;text-align:center"><img ng-src="../assets/images/{{imageByName(app)}}.png" title="Current status of the role (Enabled/Disabled)" alt="Current status of the role (Enabled/Disabled)"/> </td>
 					<td><img class="link" ng-click="deleteRole(app)"  src="../assets/images/delete.png" title="Delete Role" alt="Delete Role"/></td>
 				</tr>
 			</tbody>				

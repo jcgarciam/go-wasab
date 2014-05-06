@@ -293,7 +293,11 @@ angular.module('wasab.controllers', [])
 					$scope.searchRolesByApp($scope.selectedApp);
 				}
 			});
-
+			$scope.imageByName = function(app){
+				if(app.enabled)
+					return "tick";
+				return "cross";
+			};
 			$scope.nextPage = function(lstSize){
 				if($scope.currentPage < lstSize - 1){
 					$scope.currentPage = $scope.currentPage + 1;
@@ -342,20 +346,20 @@ angular.module('wasab.controllers', [])
 				}
 			};
 	}])	
-	.controller('GroupsNewCtrl', ['$scope','$location','ApplicationsRepository',
+	.controller('RolesNewCtrl', ['$scope','$location','ApplicationsRepository',
 		'RolesRepository',
 		function($scope, $location, ApplicationsRepository, RolesRepository) {
 			$scope.applicationList  = ApplicationsRepository.query();
-			$scope.AddGroup = function(){
+			$scope.AddRole = function(){
 				var grp = new RolesRepository($scope.newgrp);
 				grp.application_id = $scope.selectedApp.id;
 				var result = RolesRepository.create(grp);
 				result.$promise.then(function(){
-					$location.path("/groups");
+					$location.path("/roles");
 				});
 			}		
 	}])
-	.controller('GroupsEditCtrl', ['$scope','$location','ApplicationsRepository',
+	.controller('RolesEditCtrl', ['$scope','$location','ApplicationsRepository',
 		'RolesRepository','$routeParams',
 		function($scope, $location, ApplicationsRepository,
 		 RolesRepository, $routeParams) {
@@ -372,13 +376,13 @@ angular.module('wasab.controllers', [])
 			 	});
 			});
 
-			$scope.EditGroup = function(){
+			$scope.EditRole = function(){
 				var grp = new RolesRepository($scope.editapp);
 				grp.application_id = $scope.selectedApp.id;
 
 				var result = RolesRepository.update(grp);
 				result.$promise.then(function(){
-					$location.path("/groups/application/"+grp.application_id);
+					$location.path("/roles/application/"+grp.application_id);
 				});
 			}		
 		}]);

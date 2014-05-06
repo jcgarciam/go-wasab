@@ -226,6 +226,14 @@ func User_List() []User {
 
 	return apps
 }
+func User_ListByAppId(appId string) []User {
+	var apps []User
+
+	_, err := dbMap.Select(&apps, "select * from users where application_id = $1 order by id", appId)
+	checkErr(err, "sql.Query User by appId")
+
+	return apps
+}
 
 //Create
 func Application_Create(app *Application) error {
@@ -250,8 +258,8 @@ func Operation_Create(oper *Operation) error {
 	return err
 }
 func Role_Create(rol *Role) error {
-	_, err := dbMap.Exec("insert into roles (name, enabled) values($1,$2)",
-		strings.ToUpper(rol.Name), rol.Enabled)
+	_, err := dbMap.Exec("insert into roles (name, application_id, enabled) values($1,$2,$3)",
+		strings.ToUpper(rol.Name), rol.ApplicationId, rol.Enabled)
 
 	checkErr(err, "sql.Create Role")
 	return err
@@ -287,8 +295,8 @@ func Operation_Update(ope *Operation) error {
 	return err
 }
 func Role_Update(rol *Role) error {
-	_, err := dbMap.Exec("update  roles set name = $2 where id = $1",
-		rol.Id, strings.ToUpper(rol.Name))
+	_, err := dbMap.Exec("update  roles set name = $2, enabled = $3, application_id = $4 where id = $1",
+		rol.Id, strings.ToUpper(rol.Name), rol.Enabled, rol.ApplicationId)
 
 	checkErr(err, "sql.Update Role")
 	return err

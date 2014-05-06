@@ -51,6 +51,7 @@ func createRoles(enc Encoder, r *http.Request) (int, string) {
 		return Result(enc, http.StatusBadRequest, "Parameter 'name' is required")
 	}
 
+	grp.Enabled = true
 	err = model.Role_Create(&grp)
 
 	if err != nil {
