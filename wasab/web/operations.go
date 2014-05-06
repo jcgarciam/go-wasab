@@ -89,7 +89,7 @@ func updateOperations(enc Encoder, r *http.Request) (int, string) {
 		log.Println(err)
 		return Result(enc, http.StatusInternalServerError, fmt.Sprintf("Error Updating Operation [%v]", err))
 	}
-	return Result(enc, http.StatusOK, "Operation updated succesfully")
+	return Result(enc, http.StatusOK, oper /*"Operation updated succesfully"*/)
 }
 
 func deleteOperation(enc Encoder, r *http.Request, m martini.Params) (int, string) {

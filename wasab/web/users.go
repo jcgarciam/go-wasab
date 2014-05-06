@@ -17,7 +17,7 @@ func InitUsersRoutes(r martini.Router) {
 		router.Get("/list", getUsers)
 		router.Post("/create", createUsers)
 		router.Post("/update", updateUsers)
-		//router.Post("/delete/:id", deleteUser)
+		router.Post("/delete/:id", deleteUser)
 	})
 }
 
@@ -76,7 +76,7 @@ func updateUsers(enc Encoder, r *http.Request) (int, string) {
 		log.Println(err)
 		return Result(enc, http.StatusInternalServerError, fmt.Sprintf("Error Updating User [%v]", err))
 	}
-	return Result(enc, http.StatusOK, "User updated succesfully")
+	return Result(enc, http.StatusOK, grp /*"User updated succesfully"*/)
 }
 
 func deleteUser(enc Encoder, r *http.Request, m martini.Params) (int, string) {

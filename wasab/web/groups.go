@@ -80,7 +80,7 @@ func updateGroups(enc Encoder, r *http.Request) (int, string) {
 		log.Println(err)
 		return Result(enc, http.StatusInternalServerError, fmt.Sprintf("Error Updating Group [%v]", err))
 	}
-	return Result(enc, http.StatusOK, "Group updated succesfully")
+	return Result(enc, http.StatusOK, grp /*"Group updated succesfully"*/)
 }
 
 func deleteGroup(enc Encoder, r *http.Request, m martini.Params) (int, string) {

@@ -81,7 +81,7 @@ func updateRoles(enc Encoder, r *http.Request) (int, string) {
 		log.Println(err)
 		return Result(enc, http.StatusInternalServerError, fmt.Sprintf("Error Updating Role [%v]", err))
 	}
-	return Result(enc, http.StatusOK, "Role updated succesfully")
+	return Result(enc, http.StatusOK, grp /*"Role updated succesfully"*/)
 }
 
 func deleteRole(enc Encoder, r *http.Request, m martini.Params) (int, string) {

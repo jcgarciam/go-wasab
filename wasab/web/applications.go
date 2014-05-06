@@ -76,7 +76,7 @@ func updateApplications(enc Encoder, r *http.Request) (int, string) {
 		log.Println(err)
 		return Result(enc, http.StatusInternalServerError, fmt.Sprintf("Error Updating application [%v]", err))
 	}
-	return Result(enc, http.StatusOK, "Application updated succesfully")
+	return Result(enc, http.StatusOK, app /*"Application updated succesfully"*/)
 }
 
 func deleteApplication(enc Encoder, r *http.Request, m martini.Params) (int, string) {
