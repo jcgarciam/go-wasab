@@ -136,7 +136,7 @@ func Operation_ByPk(id string) OperationApplicationJoin {
 	var ret OperationApplicationJoin
 
 	sql := `select operations.*, applications.name application_name 
-			from groups, operations
+			from operations, applications
 		  	where operations.application_id = applications.id and operations.id = $1`
 
 	err := dbMap.SelectOne(&ret, sql, id)
