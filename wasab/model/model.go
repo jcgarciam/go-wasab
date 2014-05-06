@@ -302,8 +302,8 @@ func Role_Update(rol *Role) error {
 	return err
 }
 func User_Update(app *User) error {
-	_, err := dbMap.Exec("update  users set name = $2, ext_code = $3 where id = $1",
-		app.Id, strings.ToUpper(app.Name), app.ExtCode)
+	_, err := dbMap.Exec("update  users set name = $2, ext_code = $3, enabled = $4 where id = $1",
+		app.Id, strings.ToUpper(app.Name), strings.ToUpper(app.ExtCode), app.Enabled)
 
 	checkErr(err, "sql.Update User")
 	return err

@@ -14,9 +14,6 @@
 	<div class="form-group">
 		<label for="roleName">Set your new Role name</label>
 		<input id="roleName" class="form-control" type="text" ng-model="newgrp.name" name="roleName" placeholder="Role Name"/>
-	   <div ng-show="form.roleName.$dirty && form.roleName.$invalid">Invalid:
-	      <span ng-show="form.roleName.$error.required">Please provide a Role name.</span>
-	    </div>
 	</div>
 	<div class="form-button">
 		<input type="submit" value="Save" class="btn btn-primary" />

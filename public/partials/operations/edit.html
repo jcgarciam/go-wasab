@@ -16,9 +16,6 @@
 	<div class="form-group">
 		<label for="editOperationName">Change your Operation name</label>
 		<input id="editOperationName" class="form-control" type="text" ng-model="editapp.name" name="editOperationName" placeholder="Operation Name" focus-on-load />
-	   <div ng-show="form.editOperationName.$dirty && form.editOperationName.$invalid">Invalid:
-	      <span ng-show="form.editOperationName.$error.required">Please provide a group name.</span>
-	    </div>
 	</div>
 	<div class="form-button">
 		<input type="submit" value="Save" class="btn btn-primary" />

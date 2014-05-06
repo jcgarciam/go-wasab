@@ -32,7 +32,6 @@ angular.module('wasab', [
   $routeProvider.when('/roles/edit/:id',  { templateUrl: 'partials/roles/edit.html', controller:'RolesEditCtrl'});  
 
   $routeProvider.when('/users',  {templateUrl: 'partials/users/index.html', controller : 'UsersCtrl'});
-  $routeProvider.when('/users/application/:appId',  {templateUrl: 'partials/users/index.html', controller : 'UsersCtrl'});
   $routeProvider.when('/users/new',  {templateUrl: 'partials/users/add.html', controller:'UsersNewCtrl'});
   $routeProvider.when('/users/edit/:id',  { templateUrl: 'partials/users/edit.html', controller:'UsersEditCtrl'});  
 

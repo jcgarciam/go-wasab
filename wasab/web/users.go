@@ -15,7 +15,6 @@ func InitUsersRoutes(r martini.Router) {
 	r.Group("/admin/users", func(router martini.Router) {
 		router.Get("/get/:id", getUser)
 		router.Get("/list", getUsers)
-		router.Get("/application/:appId", getUsersByApplication)
 		router.Post("/create", createUsers)
 		router.Post("/update", updateUsers)
 		router.Post("/delete/:id", deleteUser)
@@ -36,10 +35,6 @@ func getUsers(enc Encoder, r *http.Request) (int, string) {
 	return Result(enc, http.StatusOK, ret)
 }
 
-func getUsersByApplication(enc Encoder, r *http.Request, m martini.Params) (int, string) {
-	ret := model.User_ListByAppId(m["appId"])
-	return Result(enc, http.StatusOK, ret)
-}
 func createUsers(enc Encoder, r *http.Request) (int, string) {
 	grp := model.User{}
 	err := json.NewDecoder(r.Body).Decode(&grp)
@@ -51,6 +46,7 @@ func createUsers(enc Encoder, r *http.Request) (int, string) {
 		return Result(enc, http.StatusBadRequest, "Parameter 'name' is required")
 	}
 
+	grp.Enabled = true
 	err = model.User_Create(&grp)
 
 	if err != nil {

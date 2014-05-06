@@ -7,6 +7,11 @@ angular.module('wasab.controllers', [])
 		//Global items
 		$scope.itemsPerPage		= 10;
 		$scope.totalElements	= 0;
+		$scope.imageByName = function(app){
+			if(app.enabled)
+				return "tick";
+			return "cross";
+		};		
 		$scope.paginateList		= function (promiseData, pageIndex, $targetScope){
 			$scope.totalElements		= promiseData.length;
 			$targetScope.pagedList 		= []
@@ -293,11 +298,6 @@ angular.module('wasab.controllers', [])
 					$scope.searchRolesByApp($scope.selectedApp);
 				}
 			});
-			$scope.imageByName = function(app){
-				if(app.enabled)
-					return "tick";
-				return "cross";
-			};
 			$scope.nextPage = function(lstSize){
 				if($scope.currentPage < lstSize - 1){
 					$scope.currentPage = $scope.currentPage + 1;
@@ -389,28 +389,11 @@ angular.module('wasab.controllers', [])
 	.controller('UsersCtrl', ['$scope', 'ApplicationsRepository','UsersRepository',
 		'$routeParams','$filter',
 		function($scope, ApplicationsRepository, UsersRepository, $routeParams, $filter) {
-			$scope.applicationList  = ApplicationsRepository.query();
-			$scope.applicationList.$promise.then(function(data){
-				if(data.length > 0){
-					var paramAppId = parseInt($routeParams.appId) || 0 ;
-					if(paramAppId > 0){
-						for(var i = 0; i< data.length; i++){
-							if(data[i].id === paramAppId){
-								$scope.selectedApp = data[i];
-								break;
-							}
-						}
-					}else{
-						$scope.selectedApp = data[0];
-					}
-					$scope.searchUsersByApp($scope.selectedApp);
-				}
+			$scope.usersList 	= UsersRepository.query();
+			$scope.usersList.$promise.then(function(data){
+				$scope.paginateList(data, 0 , $scope);
 			});
-			$scope.imageByName = function(app){
-				if(app.enabled)
-					return "tick";
-				return "cross";
-			};
+
 			$scope.nextPage = function(lstSize){
 				if($scope.currentPage < lstSize - 1){
 					$scope.currentPage = $scope.currentPage + 1;
@@ -422,12 +405,6 @@ angular.module('wasab.controllers', [])
 				}
 			};
 
-			$scope.searchUsersByApp = function(app){
-				$scope.usersList 	= UsersRepository.queryByAppId({appId : app.id});
-				$scope.usersList.$promise.then(function(data){
-					$scope.paginateList(data, 0 , $scope);
-				});
-			};
 			$scope.filterByUser = function(query, pageIndex /*this is called from delete operation*/){
 				$scope.usersList.$promise.then(function(data){
 					var filtered = data;
@@ -462,10 +439,8 @@ angular.module('wasab.controllers', [])
 	.controller('UsersNewCtrl', ['$scope','$location','ApplicationsRepository',
 		'UsersRepository',
 		function($scope, $location, ApplicationsRepository, UsersRepository) {
-			$scope.applicationList  = ApplicationsRepository.query();
 			$scope.AddUser = function(){
 				var grp = new UsersRepository($scope.newgrp);
-				grp.application_id = $scope.selectedApp.id;
 				var result = UsersRepository.create(grp);
 				result.$promise.then(function(){
 					$location.path("/users");
@@ -477,25 +452,13 @@ angular.module('wasab.controllers', [])
 		function($scope, $location, ApplicationsRepository,
 		 UsersRepository, $routeParams) {
 			$scope.editapp = UsersRepository.byId({id : $routeParams.id});
-			$scope.editapp.$promise.then(function(data){
-			 	$scope.applicationList  = ApplicationsRepository.query();
-			 	$scope.applicationList.$promise.then(function(data){
-			 		for(var i= 0; i < data.length; i++){
-			 			if(data[i].id === $scope.editapp.application_id){
-							$scope.selectedApp = data[i];
-							break;
-			 			}
-			 		}
-			 	});
-			});
 
 			$scope.EditRole = function(){
 				var grp = new UsersRepository($scope.editapp);
-				grp.application_id = $scope.selectedApp.id;
 
 				var result = UsersRepository.update(grp);
 				result.$promise.then(function(){
-					$location.path("/users/application/"+grp.application_id);
+					$location.path("/users");
 				});
 			}		
 	}]);

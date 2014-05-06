@@ -1,16 +1,6 @@
 <p>
 	<a href="#/users/new" title="New User"><img src="../assets/images/add.png" alt="New User"/> <span>New User</span></a>
 	<div>
-		<div><label for="appName">Filter by Application</label></div>
-		<div class="form-group">
-			<select id="appName"
-					class="form-control"
-					ng-model="selectedApp" 
-					ng-options="c.name for c in applicationList"
-					ng-change="searchUsersByApp(selectedApp)">
-				
-			</select>
-		</div>
 		<div class="form-group" ng-show="usersList.length > 0">
 			<label for="filterUserName">Filter for your User</label>
 			<input id="filterUserName" class="form-control" type="text"
@@ -23,7 +13,7 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>ExtCode</th>
+					<th>Ext. Code</th>
 					<th>Enabled</th>
 					<th></th>
 				</tr>

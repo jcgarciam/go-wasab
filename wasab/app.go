@@ -10,4 +10,5 @@ func RegisterRoutes(r martini.Router) {
 	web.InitGroupsRoutes(r)
 	web.InitOperationsRoutes(r)
 	web.InitRolesRoutes(r)
+	web.InitUsersRoutes(r)
 }

@@ -14,9 +14,6 @@
 	<div class="form-group">
 		<label for="grpname">Set your new Group name</label>
 		<input id="grpname" class="form-control" type="text" ng-model="newgrp.name" name="grpname" placeholder="Group Name"/>
-	   <div ng-show="form.grpname.$dirty && form.grpname.$invalid">Invalid:
-	      <span ng-show="form.grpname.$error.required">Please provide a group name.</span>
-	    </div>
 	</div>
 	<div class="form-button">
 		<input type="submit" value="Save" class="btn btn-primary" />
