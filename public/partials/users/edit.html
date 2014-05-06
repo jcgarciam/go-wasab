@@ -1,0 +1,25 @@
+<form name="form" role="form" ng-submit="EditRole()" novalidate>
+	<div class="form-group">
+		<div>
+			<label for="appName">Select your Application</label>	
+		</div>
+		<select id="appName"
+				class="form-control"
+				ng-model="selectedApp" 
+				ng-options="c.name for c in applicationList"
+				focus-on-load>
+			
+		</select>
+	</div>	
+	<div class="form-group">
+		<label for="editRoleName">Change your Role name</label>
+		<input id="editRoleName" class="form-control" type="text" ng-model="editapp.name" name="editRoleName" placeholder="Role Name" focus-on-load />
+	   <div ng-show="form.editRoleName.$dirty && form.editRoleName.$invalid">Invalid:
+	      <span ng-show="form.editRoleName.$error.required">Please provide a role name.</span>
+	    </div>
+	</div>
+	<div class="form-button">
+		<input type="submit" value="Save" class="btn btn-primary" />
+		<a href="#/roles" class="btn btn-danger">Cancel</a>
+	</div>
+</form>
