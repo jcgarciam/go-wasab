@@ -385,5 +385,118 @@ angular.module('wasab.controllers', [])
 					$location.path("/roles/application/"+grp.application_id);
 				});
 			}		
-		}]);
+	}])/*Users*/
+	.controller('UsersCtrl', ['$scope', 'ApplicationsRepository','UsersRepository',
+		'$routeParams','$filter',
+		function($scope, ApplicationsRepository, UsersRepository, $routeParams, $filter) {
+			$scope.applicationList  = ApplicationsRepository.query();
+			$scope.applicationList.$promise.then(function(data){
+				if(data.length > 0){
+					var paramAppId = parseInt($routeParams.appId) || 0 ;
+					if(paramAppId > 0){
+						for(var i = 0; i< data.length; i++){
+							if(data[i].id === paramAppId){
+								$scope.selectedApp = data[i];
+								break;
+							}
+						}
+					}else{
+						$scope.selectedApp = data[0];
+					}
+					$scope.searchUsersByApp($scope.selectedApp);
+				}
+			});
+			$scope.imageByName = function(app){
+				if(app.enabled)
+					return "tick";
+				return "cross";
+			};
+			$scope.nextPage = function(lstSize){
+				if($scope.currentPage < lstSize - 1){
+					$scope.currentPage = $scope.currentPage + 1;
+				}
+			};
+			$scope.prevPage = function(lstSize){
+				if($scope.currentPage > 0){
+					$scope.currentPage = $scope.currentPage - 1;
+				}
+			};
+
+			$scope.searchUsersByApp = function(app){
+				$scope.usersList 	= UsersRepository.queryByAppId({appId : app.id});
+				$scope.usersList.$promise.then(function(data){
+					$scope.paginateList(data, 0 , $scope);
+				});
+			};
+			$scope.filterByUser = function(query, pageIndex /*this is called from delete operation*/){
+				$scope.usersList.$promise.then(function(data){
+					var filtered = data;
+					if(query !== undefined && query.length > 0){
+						filtered = $filter("filter")(data, query, function(actual,expected){
+							if(actual.toString().indexOf(expected.toUpperCase()) !== -1){
+								return true;
+							}
+							return false;
+						});						
+					}
+					$scope.paginateList(filtered, pageIndex || 0, $scope);
+				});
+			};
+			
+			$scope.deleteUser = function(app){
+				if(confirm("Are you sure?") === true){
+					var result = UsersRepository.delete({id:app.id});
+					result.$promise
+					.then(function(){
+						for(var i = 0; i < $scope.usersList.length; i++){
+							if($scope.usersList[i] === app){
+								$scope.usersList.splice(i, 1)	
+								$scope.filterByUser($scope.filterGroupName, $scope.currentPage);
+								break;
+							}
+						}
+					});
+				}
+			};
+	}])	
+	.controller('UsersNewCtrl', ['$scope','$location','ApplicationsRepository',
+		'UsersRepository',
+		function($scope, $location, ApplicationsRepository, UsersRepository) {
+			$scope.applicationList  = ApplicationsRepository.query();
+			$scope.AddUser = function(){
+				var grp = new UsersRepository($scope.newgrp);
+				grp.application_id = $scope.selectedApp.id;
+				var result = UsersRepository.create(grp);
+				result.$promise.then(function(){
+					$location.path("/users");
+				});
+			}		
+	}])
+	.controller('UsersEditCtrl', ['$scope','$location','ApplicationsRepository',
+		'UsersRepository','$routeParams',
+		function($scope, $location, ApplicationsRepository,
+		 UsersRepository, $routeParams) {
+			$scope.editapp = UsersRepository.byId({id : $routeParams.id});
+			$scope.editapp.$promise.then(function(data){
+			 	$scope.applicationList  = ApplicationsRepository.query();
+			 	$scope.applicationList.$promise.then(function(data){
+			 		for(var i= 0; i < data.length; i++){
+			 			if(data[i].id === $scope.editapp.application_id){
+							$scope.selectedApp = data[i];
+							break;
+			 			}
+			 		}
+			 	});
+			});
+
+			$scope.EditRole = function(){
+				var grp = new UsersRepository($scope.editapp);
+				grp.application_id = $scope.selectedApp.id;
+
+				var result = UsersRepository.update(grp);
+				result.$promise.then(function(){
+					$location.path("/users/application/"+grp.application_id);
+				});
+			}		
+	}]);
 
