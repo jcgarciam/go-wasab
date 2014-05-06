@@ -17,7 +17,7 @@ func InitUsersRoutes(r martini.Router) {
 		router.Get("/list", getUsers)
 		router.Post("/create", createUsers)
 		router.Post("/update", updateUsers)
-		router.Post("/delete/:id", deleteUser)
+		//router.Post("/delete/:id", deleteUser)
 	})
 }
 

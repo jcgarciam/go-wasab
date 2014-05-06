@@ -15,7 +15,6 @@
 					<th>Name</th>
 					<th>Ext. Code</th>
 					<th>Enabled</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody ng-repeat="app in pagedList[currentPage]">
@@ -24,7 +23,6 @@
 					<td style="width:20"><a ng-href="#/users/edit/{{app.id}}">{{app.ext_code}}</a></td>
 					<td style="width:5%;text-align:center"><img ng-src="../assets/images/{{imageByName(app)}}.png" title="Current status of the user (Enabled/Disabled)" alt="Current status of the role (Enabled/Disabled)"/> </td>
 
-					<td><img class="link" ng-click="deleteUser(app)"  src="../assets/images/delete.png" title="Delete User" alt="Delete User"/></td>
 				</tr>
 			</tbody>				
 		</table>			

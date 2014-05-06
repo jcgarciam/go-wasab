@@ -419,22 +419,6 @@ angular.module('wasab.controllers', [])
 					$scope.paginateList(filtered, pageIndex || 0, $scope);
 				});
 			};
-			
-			$scope.deleteUser = function(app){
-				if(confirm("Are you sure?") === true){
-					var result = UsersRepository.delete({id:app.id});
-					result.$promise
-					.then(function(){
-						for(var i = 0; i < $scope.usersList.length; i++){
-							if($scope.usersList[i] === app){
-								$scope.usersList.splice(i, 1)	
-								$scope.filterByUser($scope.filterGroupName, $scope.currentPage);
-								break;
-							}
-						}
-					});
-				}
-			};
 	}])	
 	.controller('UsersNewCtrl', ['$scope','$location','ApplicationsRepository',
 		'UsersRepository',
@@ -453,9 +437,8 @@ angular.module('wasab.controllers', [])
 		 UsersRepository, $routeParams) {
 			$scope.editapp = UsersRepository.byId({id : $routeParams.id});
 
-			$scope.EditRole = function(){
+			$scope.EditUser = function(){
 				var grp = new UsersRepository($scope.editapp);
-
 				var result = UsersRepository.update(grp);
 				result.$promise.then(function(){
 					$location.path("/users");
