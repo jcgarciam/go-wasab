@@ -1,4 +1,4 @@
-<form name="form" role="form" ng-submit="EditGroup()" novalidate>
+<form name="form" role="form" ng-submit="EditOperation()" novalidate>
 	<div class="form-group">
 		<div>
 			<label for="appName">Select your Application</label>	
@@ -14,8 +14,12 @@
 		</div>
 	</div>	
 	<div class="form-group">
-		<label for="editOperationName">Change your Operation name</label>
-		<input id="editOperationName" class="form-control" type="text" ng-model="editapp.name" name="editOperationName" placeholder="Operation Name" focus-on-load />
+		<label for="editOperationCode">Change your Operation Code</label>
+		<input id="editOperationCode" class="form-control" type="text" ng-model="editapp.code" name="editOperationCode" placeholder="Operation Code" focus-on-load />
+	</div>
+	<div class="form-group">
+		<label for="editOperationDescription">Change your Operation Description</label>
+		<input id="editOperationDescription" class="form-control" type="text" ng-model="editapp.description" name="editOperationDescription" placeholder="Operation Name" />
 	</div>
 	<div class="form-button">
 		<input type="submit" value="Save" class="btn btn-primary" />

@@ -26,8 +26,8 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody ng-repeat="app in pagedList[currentPage]">
-				<tr>
+			<tbody>
+				<tr ng-repeat="app in pagedList[currentPage]">
 					<td style="width:95%"><a ng-href="#/groups/edit/{{app.id}}"><img src="../assets/images/package.png" /> {{app.name}}</a></td>
 					<td><img class="link" ng-click="deleteGroup(app)"  src="../assets/images/delete.png" title="Delete Group" alt="Delete Group"/></td>
 				</tr>
