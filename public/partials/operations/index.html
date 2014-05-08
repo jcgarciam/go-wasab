@@ -28,10 +28,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="app in  pagedList[currentPage]">
-					<td><a ng-href="#/operations/edit/{{app.id}}" title="{{app.description}}"><img src="../assets/images/cog.png" /> {{app.code}}</a></td>
-					<td>{{app.description}}</td>
-					<td><img class="link" ng-click="deleteOperation(app)"  src="../assets/images/delete.png" title="Delete Operation" alt="Delete Operation"/></td>
+				<tr ng-repeat="app in  pagedList[currentPage]" >
+					<td style="width:45%"><a ng-href="#/operations/edit/{{app.id}}" title="{{app.description}}"><img src="../assets/images/cog.png" /> {{app.code}}</a></td>
+					<td style="width:45%">{{app.description}}</td>
+					<td style="width:2%"><img class="link" ng-click="deleteOperation(app)"  src="../assets/images/delete.png" title="Delete Operation" alt="Delete Operation"/></td>
 				</tr>
 			</tbody>				
 		</table>
