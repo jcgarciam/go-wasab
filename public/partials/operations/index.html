@@ -29,7 +29,7 @@
 			</thead>
 			<tbody ng-repeat="app in  pagedList[currentPage]">
 				<tr>
-					<td style="width:45%"><a ng-href="#/operations/edit/{{app.id}}" title="{{app.description}}">{{app.code}}</a></td>
+					<td style="width:45%"><a ng-href="#/operations/edit/{{app.id}}" title="{{app.description}}"><img src="../assets/images/cog.png" /> {{app.code}}</a></td>
 					<td style="width:45%">{{app.description}}</td>
 					<td style="width:5%"><img class="link" ng-click="deleteOperation(app)"  src="../assets/images/delete.png" title="Delete Operation" alt="Delete Operation"/></td>
 				</tr>

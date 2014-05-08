@@ -158,9 +158,11 @@ img.right {
 #content a:hover,#subcontent a:hover {
     text-decoration: underline;
 }
+/*
 #content ul,#content ol {
     margin: 0 5px 16px 35px;
 }
+*/
 #content dl {
     margin: 0 5px 10px 25px;
 }
@@ -198,7 +200,7 @@ img.right {
 /**************** Menublock styles ****************/
 
 .menublock {
-    margin: 0 0 20px 8px;
+    margin: 20px 10px;
     font-size: 1.0em;
 }
 .menublock li {

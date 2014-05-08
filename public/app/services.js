@@ -36,5 +36,4 @@ angular.module('wasab.services', [])
 .service('UsersRepository',['WasabRestBuilder',function(WasabRestBuilder){
 	return WasabRestBuilder.api('users',
 								{queryByAppId:{url:'/admin/users/application/:appId',params:{appId:'@appId'}, isArray:true}});
-
 }])	;
