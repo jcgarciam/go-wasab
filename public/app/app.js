@@ -55,7 +55,23 @@ angular.module('wasab', [
         ///Global Error Handler
         ///TODO: Define elegant popup :)
         'responseError': function(rejection){
-          alert("Error:\n "+"-------------------\n"+rejection.data);
+          //alert("Error:\n "+"-------------------\n"+rejection.data);
+          var message = rejection.data;
+          if(message === "" || message === undefined){
+            message = "Oops it seems there is a problem buddy!";
+          }
+
+          var htmlMessage = [];
+          
+          htmlMessage.push("<div class='ui-state-error ui-corner-all' style='padding: 0 .7em;''>");
+          htmlMessage.push(message);
+          htmlMessage.push("</diV>");
+
+          $("#popup-holder").html(htmlMessage.join("")).dialog({
+            modal:true,
+            title:"Error processing your request!"
+          });
+
           return $q.reject(rejection);
         }
       };

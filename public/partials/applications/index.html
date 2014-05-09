@@ -12,7 +12,7 @@
 			<tr ng-repeat="app in applicationList">
 				<td style="width:45%"><img class="link" src="../assets/images/chart_organisation.png" alt="Roles and Users under this application" title="Roles and Users under this application" /> <a ng-href="#/applications/edit/{{app.id}}">{{app.name}}</a></td>
 				<td style="width:45%"><span title="Use this identifier in the public API.">{{app.public_id}}</span></td>
-				<td style="width:5%"><img class="link" ng-click="deleteApplication(app)"  src="../assets/images/delete.png" title="Delete application" alt="Delete application"/></td>
+				<td style="width:1%"><img class="link" ng-click="deleteApplication(app)"  src="../assets/images/delete.png" title="Delete application" alt="Delete application"/></td>
 			</tr>
 		</tbody>				
 	</table>
