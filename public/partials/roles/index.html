@@ -29,9 +29,9 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="app in pagedList[currentPage]">
-					<td style="width:90%"><a ng-href="#/roles/edit/{{app.id}}"><img src="../assets/images/connect.png" /> {{app.name}}</a></td>
-					<td style="width:5%;text-align:center"><img class="link" ng-click="toggleEnabled(app)" ng-src="../assets/images/{{imageByName(app)}}.png" title="Current status of the role (Enabled/Disabled)" alt="Current status of the role (Enabled/Disabled)"/> </td>
-					<td><img class="link" ng-click="deleteRole(app)"  src="../assets/images/delete.png" title="Delete Role" alt="Delete Role"/></td>
+					<td style="width:85%"><a ng-href="#/roles/edit/{{app.id}}"><img src="../assets/images/connect.png" /> {{app.name}}</a></td>
+					<td style="width:10%;text-align:center"><img class="link" ng-click="toggleEnabled(app)" ng-src="../assets/images/{{imageByName(app)}}.png" title="Current status of the role (Enabled/Disabled)" alt="Current status of the role (Enabled/Disabled)"/> </td>
+					<td style="width:5%;"><img class="link" ng-click="deleteRole(app)"  src="../assets/images/delete.png" title="Delete Role" alt="Delete Role"/></td>
 				</tr>
 			</tbody>				
 		</table>			

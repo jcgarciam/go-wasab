@@ -95,6 +95,9 @@ angular.module('wasab.controllers', [])
 				}
 			});
 
+			$scope.firstPage = function(){
+				$scope.currentPage = 0;
+			};
 			$scope.nextPage = function(lstSize){
 				if($scope.currentPage < lstSize - 1){
 					$scope.currentPage = $scope.currentPage + 1;
@@ -105,6 +108,10 @@ angular.module('wasab.controllers', [])
 					$scope.currentPage = $scope.currentPage - 1;
 				}
 			};
+			$scope.lastPage = function(lstSize){
+				$scope.currentPage = lstSize - 1;
+			};
+
 
 			$scope.searchGroupsByApp = function(app){
 				$scope.groupsList 	= GroupsRepository.queryByAppId({appId : app.id});
@@ -302,6 +309,9 @@ angular.module('wasab.controllers', [])
 					$scope.searchRolesByApp($scope.selectedApp);
 				}
 			});
+			$scope.firstPage = function(){
+				$scope.currentPage = 0;
+			};
 			$scope.nextPage = function(lstSize){
 				if($scope.currentPage < lstSize - 1){
 					$scope.currentPage = $scope.currentPage + 1;
@@ -311,6 +321,9 @@ angular.module('wasab.controllers', [])
 				if($scope.currentPage > 0){
 					$scope.currentPage = $scope.currentPage - 1;
 				}
+			};
+			$scope.lastPage = function(lstSize){
+				$scope.currentPage = lstSize - 1;
 			};
 
 			$scope.searchRolesByApp = function(app){
@@ -398,6 +411,9 @@ angular.module('wasab.controllers', [])
 				$scope.paginateList(data, 0 , $scope);
 			});
 
+			$scope.firstPage = function(){
+				$scope.currentPage = 0;
+			};
 			$scope.nextPage = function(lstSize){
 				if($scope.currentPage < lstSize - 1){
 					$scope.currentPage = $scope.currentPage + 1;
@@ -407,6 +423,9 @@ angular.module('wasab.controllers', [])
 				if($scope.currentPage > 0){
 					$scope.currentPage = $scope.currentPage - 1;
 				}
+			};
+			$scope.lastPage = function(lstSize){
+				$scope.currentPage = lstSize - 1;
 			};
 
 			$scope.filterByUser = function(query, pageIndex /*this is called from delete operation*/){

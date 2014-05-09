@@ -330,7 +330,7 @@ select{
 table.table{
 	width:100%;
 	border:1px solid #c0c0c0;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     word-break:break-all;
 }
 table.table tr th{

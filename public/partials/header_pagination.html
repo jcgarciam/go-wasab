@@ -3,16 +3,22 @@
 	<div class="pull-right">
 		<ul class="pagination" style="margin:0px">
 			<li>
-			    <a href ng-click="prevPage(pagedList.length)">« Prev</a>
+			    <a title="First page" href ng-click="firstPage()">««</a>
 			</li>
 			<li>
-			    <a href ng-click="nextPage(pagedList.length)" next-page>Next »</a>
+			    <a title="Previous page" href ng-click="prevPage(pagedList.length)">«</a>
+			</li>
+			<li>
+			    <a title="Next page" href ng-click="nextPage(pagedList.length)" next-page>»</a>
+			</li>
+			<li>
+			    <a title="Last page" href ng-click="lastPage(pagedList.length)" next-page>»»</a>
 			</li>
 		</ul>
 	</div>
 	<div class="clearfix"></div>
 	<div class="pull-right">
-			<span class="paging-info">Showing max. {{itemsPerPage}} of {{totalElements}} Records for Page {{currentPage + 1}} of {{pagedList.length}} Pages</span>
+			<span class="paging-info">Showing max. <strong>{{itemsPerPage}}</strong> of <strong>{{totalElements}}</strong> Records for Page <strong>{{currentPage + 1}}</strong> of <strong>{{pagedList.length}}</strong> Pages</span>
 	</div>
 	<div class="clearfix"></div>	
 </div>

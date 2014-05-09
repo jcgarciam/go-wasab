@@ -24,12 +24,14 @@
 				<tr>
 					<th>Name</th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="app in pagedList[currentPage]">
 					<td style="width:95%"><a ng-href="#/groups/edit/{{app.id}}"><img src="../assets/images/package.png" /> {{app.name}}</a></td>
-					<td><img class="link" ng-click="deleteGroup(app)"  src="../assets/images/delete.png" title="Delete Group" alt="Delete Group"/></td>
+					<td style="width:2%"><img class="link" ng-click=""  src="../assets/images/connect.png" title="Map to a Role" alt="Map to a Role"/></td>
+					<td style="width:2%"><img class="link" ng-click="deleteGroup(app)"  src="../assets/images/delete.png" title="Delete Group" alt="Delete Group"/></td>
 				</tr>
 			</tbody>				
 		</table>			

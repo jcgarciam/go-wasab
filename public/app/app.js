@@ -49,7 +49,7 @@ angular.module('wasab', [
       return {
         ///Prevent Caching
         'request': function(config){
-           config.url = config.url + ("?_="+(Math.random() * 0xffffffff | 1));
+           //config.url = config.url + ("?_="+(Math.random() * 0xffffffff | 1));
           return config;
         },
         ///Global Error Handler

@@ -25,13 +25,18 @@
 					<th>Code</th>
 					<th>Description</th>
 					<th></th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="app in  pagedList[currentPage]" >
 					<td style="width:45%"><a ng-href="#/operations/edit/{{app.id}}" title="{{app.description}}"><img src="../assets/images/cog.png" /> {{app.code}}</a></td>
 					<td style="width:45%">{{app.description}}</td>
+					<td style="width:2%"><img class="link" ng-click=""  src="../assets/images/package.png" title="Map to a Group" alt="Map to a Group"/></td>
+					<td style="width:2%"><img class="link" ng-click=""  src="../assets/images/connect.png" title="Map to a Role" alt="Map to a Role"/></td>
 					<td style="width:2%"><img class="link" ng-click="deleteOperation(app)"  src="../assets/images/delete.png" title="Delete Operation" alt="Delete Operation"/></td>
+
 				</tr>
 			</tbody>				
 		</table>
