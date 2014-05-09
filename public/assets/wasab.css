@@ -363,3 +363,15 @@ div.form-button{
 	padding-top: 10px;
 	border-top: 1px solid #c0c0c0
 }
+
+/********* FOR BOOTSTRAP - ANGULAR ********/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.modal-header{
+    padding: 0px;
+}
+.modal-header{
+    padding: 0px;
+}
+.modal-header .alert{
+    margin-bottom: 0px;
+}

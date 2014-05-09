@@ -5,6 +5,7 @@
 angular.module('wasab', [
   'ngRoute',
   'ngResource',
+  'ui.bootstrap',
   'wasab.filters',
   'wasab.services',
   'wasab.directives',
@@ -45,7 +46,7 @@ angular.module('wasab', [
 
     //disable IE ajax request caching
     $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
-    $httpProvider.interceptors.push(function($q) {
+    $httpProvider.interceptors.push(function($q, $injector) {
       return {
         ///Prevent Caching
         'request': function(config){
@@ -61,15 +62,20 @@ angular.module('wasab', [
             message = "Oops it seems there is a problem buddy!";
           }
 
-          var htmlMessage = [];
-          
-          htmlMessage.push("<div class='ui-state-error ui-corner-all' style='padding: 0 .7em;''>");
-          htmlMessage.push(message);
-          htmlMessage.push("</diV>");
-
-          $("#popup-holder").html(htmlMessage.join("")).dialog({
-            modal:true,
-            title:"Error processing your request!"
+          var modal =  $injector.get(['$modal']);
+          modal.open({
+            controller: function($scope, $modalInstance, modalTitle, modalBody){
+              $scope.modalTitle = modalTitle;
+              $scope.modalBody  = modalBody;
+              $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+              };              
+            },
+            templateUrl: 'modal-holder.html',
+            resolve:{
+              modalTitle: function(){return "There was an error processing your request!";},
+              modalBody : function(){return message;}
+            }
           });
 
           return $q.reject(rejection);
