@@ -30,7 +30,12 @@
 			<tbody>
 				<tr ng-repeat="app in pagedList[currentPage]">
 					<td style="width:85%"><a ng-href="#/roles/edit/{{app.id}}"><img src="../assets/images/connect.png" /> {{app.name}}</a></td>
-					<td style="width:10%;text-align:center"><img class="link" ng-click="toggleEnabled(app)" ng-src="../assets/images/{{imageByName(app)}}.png" title="Current status of the role (Enabled/Disabled)" alt="Current status of the role (Enabled/Disabled)"/> </td>
+					<td style="width:10%;text-align:center">
+						<span ng-switch on="app.enabled" ng-click="toggleEnabled(app)">
+							<img class="link" ng-switch-when="true" src="../assets/images/tick.png" title="Deactivate Role" alt="Deactivate Role"/>
+							<img class="link" ng-switch-when="false" src="../assets/images/cross.png" title="Activate Role" alt="Activate Role"/>
+						</span>
+					</td>
 					<td style="width:1%;"><img class="link" ng-click="deleteRole(app)"  src="../assets/images/delete.png" title="Delete Role" alt="Delete Role"/></td>
 				</tr>
 			</tbody>				

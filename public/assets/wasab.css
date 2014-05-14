@@ -49,7 +49,9 @@ img.right {
     float: right;
     margin: 0 0 5px 12px;
 }
-
+button.btn{
+    min-width: 75px;
+}
 /**************** Header and navigation styles ****************/
 
 #container {
@@ -366,8 +368,11 @@ div.form-button{
 
 /********* FOR BOOTSTRAP - ANGULAR ********/
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
-.modal-header{
-    padding: 0px;
+.alert {
+    padding: 5px;
+}
+.modal-body{
+    text-align: left;
 }
 .modal-header{
     padding: 0px;

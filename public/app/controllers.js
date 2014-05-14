@@ -6,12 +6,7 @@ angular.module('wasab.controllers', [])
 	.controller("TopContainerCtrl",['$scope','$location',function($scope, $location) {
 		//Global items
 		$scope.itemsPerPage		= 10;
-		$scope.totalElements	= 0;
-		$scope.imageByName = function(app){
-			if(app.enabled)
-				return "tick";
-			return "cross";
-		};		
+		$scope.totalElements	= 0;	
 		$scope.paginateList		= function (promiseData, pageIndex, $targetScope){
 			$scope.totalElements		= promiseData.length;
 			$targetScope.pagedList 		= []
@@ -404,8 +399,8 @@ angular.module('wasab.controllers', [])
 			}		
 	}])/*Users*/
 	.controller('UsersCtrl', ['$scope', 'ApplicationsRepository','UsersRepository',
-		'$routeParams','$filter',
-		function($scope, ApplicationsRepository, UsersRepository, $routeParams, $filter) {
+		'$routeParams','$filter','$modal', 
+		function($scope, ApplicationsRepository, UsersRepository, $routeParams, $filter, $modal) {
 			$scope.usersList 	= UsersRepository.query();
 			$scope.usersList.$promise.then(function(data){
 				$scope.paginateList(data, 0 , $scope);
@@ -458,6 +453,27 @@ angular.module('wasab.controllers', [])
 					});
 				}
 			};
+			$scope.mapUserToRoles = function(user){
+		          $modal.open({
+		            controller: function($scope, $modalInstance, UsersRepository, ApplicationsRepository){
+		              $scope.user = user;
+		              $scope.applicationList  = ApplicationsRepository.query();
+
+		              $scope.searchUserRolesByApp = function(app){
+		              	$scope.userRolesList = UsersRepository.queryRolesByUserAndAppId({id : user.id, appId : app.id});
+		              };
+
+		              $scope.cancel = function () {
+		                $modalInstance.dismiss('cancel');
+		              };              
+		            },
+		            templateUrl: 'modal-user-roles.html',
+		            backdrop:'static',
+		            resolve:{
+		            	
+		            }
+		          });
+			}
 	}])	
 	.controller('UsersNewCtrl', ['$scope','$location','ApplicationsRepository',
 		'UsersRepository',

@@ -21,14 +21,64 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="app in pagedList[currentPage]">
-					<td style="width:1%"><img class="link" ng-click=""  src="../assets/images/chart_organisation.png" title="Map to a Roles" alt="Map to a Roles"/> </td>
-					<td style="width:60%"><a ng-href="#/users/edit/{{app.id}}"><img src="../assets/images/group.png" />  {{app.name}}</a></td>
-					<td style="width:20%"><a ng-href="#/users/edit/{{app.id}}">{{app.ext_code}}</a></td>
-					<td style="width:10%;text-align:center"><img class="link" ng-click="toggleEnabled(app)" ng-src="../assets/images/{{imageByName(app)}}.png" title="Current status of the user (Enabled/Disabled)" alt="Current status of the role (Enabled/Disabled)"/> </td>
-					<td style="width:1%"><img class="link" ng-click="deleteUser(app)"  src="../assets/images/delete.png" title="Delete User" alt="Delete User"/></td>
+				<tr ng-repeat="user in pagedList[currentPage]">
+					<td style="width:1%"><img class="link" ng-click="mapUserToRoles(user)"  src="../assets/images/chart_organisation.png" title="Map to a Roles" alt="Map to a Roles"/> </td>
+					<td style="width:60%"><a ng-href="#/users/edit/{{user.id}}"><img src="../assets/images/group.png" />  {{user.name}}</a></td>
+					<td style="width:20%"><a ng-href="#/users/edit/{{user.id}}">{{user.ext_code}}</a></td>
+					<td style="width:10%;text-align:center">
+						<span ng-switch on="user.enabled" ng-click="toggleEnabled(user)">
+							<img class="link" ng-switch-when="true" src="../assets/images/tick.png" title="Deactivate User" alt="Deactivate User"/>
+							<img class="link" ng-switch-when="false" src="../assets/images/cross.png" title="Activate User" alt="Activate User"/>
+						</span>
+					</td>
+					<td style="width:1%"><img class="link" ng-click="deleteUser(user)"  src="../assets/images/delete.png" title="Delete User" alt="Delete User"/></td>
 				</tr>
 			</tbody>				
 		</table>			
 	</div>
+	<script type="text/ng-template" id="modal-user-roles.html">
+			<div class="modal-header">
+				<div class="alert alert-info">
+				 	<button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+					<div>Roles For</div>
+					<div><strong>{{user.name}} (<span>{{user.ext_code}}</span>)</strong></div>
+				</div>
+			</div>
+	        <div class="modal-body">
+				<div><label for="appName">Filter by Application</label></div>
+				<div class="form-group">
+					<select id="appName"
+							class="form-control"
+							ng-model="selectedApp" 
+							ng-options="c.name for c in applicationList"
+							ng-change="searchUserRolesByApp(selectedApp)">
+						
+					</select>
+				</div>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Role Name</th>
+							<th style="text-align:center">Enabled</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="userRole in userRolesList">
+							<td style="width:85%"> {{userRole.name}}</td>
+							<td style="width:15%; text-align:center">
+								<span ng-switch on="userRole.assigned">
+									<img class="link" ng-switch-when="true"  src="../assets/images/tick.png" title="Deactivate Role" alt="Deactivate User"/>
+									<img class="link" ng-switch-when="false" src="../assets/images/cross.png" title="Activate Role" alt="Activate Role"/>
+								</span>
+							 </td>
+						</tr>
+					</tbody>				
+				</table>				
+	        </div>
+	        <div class="modal-footer">
+	            <button class="btn btn-primary" ng-click="ok()">OK</button>
+	            <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+	        </div>
+
+	</script>	
 </p>

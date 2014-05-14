@@ -15,6 +15,7 @@ func InitUsersRoutes(r martini.Router) {
 	r.Group("/admin/users", func(router martini.Router) {
 		router.Get("/get/:id", getUser)
 		router.Get("/list", getUsers)
+		router.Get("/get/:id/roles/application/:appId", getUserRoles)
 		router.Post("/create", createUsers)
 		router.Post("/update", updateUsers)
 		router.Post("/delete/:id", deleteUser)
@@ -90,5 +91,20 @@ func deleteUser(enc Encoder, r *http.Request, m martini.Params) (int, string) {
 			return Result(enc, http.StatusInternalServerError, fmt.Sprintf("Error deleting User [%v]", err))
 		}
 		return Result(enc, http.StatusOK, "User deleted succesfully")
+	}
+}
+
+func getUserRoles(enc Encoder, r *http.Request, m martini.Params) (int, string) {
+	if id, err := strconv.Atoi(m["id"]); err != nil {
+		log.Println(err)
+		return Result(enc, http.StatusBadRequest, "User id not valid")
+	} else {
+		if appId, errApp := strconv.Atoi(m["appId"]); err != nil {
+			log.Println(errApp)
+			return Result(enc, http.StatusBadRequest, "Application id not valid")
+		} else {
+			userRoles := model.Roles_ListByUserAndApp(appId, id)
+			return Result(enc, http.StatusOK, userRoles)
+		}
 	}
 }

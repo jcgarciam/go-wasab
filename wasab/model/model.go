@@ -2,6 +2,7 @@ package model
 
 import (
 	"database/sql"
+	"encoding/json"
 	"github.com/coopernurse/gorp"
 	_ "github.com/lib/pq"
 	"log"
@@ -12,15 +13,39 @@ type NullString struct {
 	sql.NullString
 }
 
+type NullInt64 struct {
+	sql.NullInt64
+}
+
 func (s *NullString) MarshalJSON() ([]byte, error) {
 	if s.Valid {
-		return []byte(`"` + s.String + `"`), nil
+		return json.Marshal(s.String)
 	}
-	return []byte(`""`), nil
+
+	return json.Marshal(nil)
 }
 
 func (s *NullString) UnmarshalJSON(data []byte) error {
-	s.String = strings.Trim(string(data), `"`)
+	if err := json.Unmarshal(data, s.String); err != nil {
+		s.Valid = false
+		return err
+	}
+	s.Valid = true
+	return nil
+}
+func (s *NullInt64) MarshalJSON() ([]byte, error) {
+	if s.Valid {
+		return json.Marshal(s.Int64)
+	}
+	return json.Marshal(nil)
+}
+
+func (s *NullInt64) UnmarshalJSON(data []byte) error {
+	s.Int64 = 0
+	if err := json.Unmarshal(data, s.Int64); err != nil {
+		s.Valid = false
+		return err
+	}
 	s.Valid = true
 	return nil
 }
@@ -79,8 +104,16 @@ type User struct {
 }
 
 type UserRole struct {
-	User int `json:"user_id" db:"user_id"`
 	Role int `json:"role_id" db:"role_id"`
+	User int `json:"user_id" db:"user_id"`
+}
+
+type UserRoleAssignmentVW struct {
+	Assigned      bool      `json:"assigned" db:"assigned"`
+	User          NullInt64 `json:"user_id" db:"user_id"`
+	Role          int       `json:"role_id" db:"role_id"`
+	Name          string    `json:"name" db:"name"`
+	ApplicationId int       `json:"application_id" db:"application_id"`
 }
 
 var (
@@ -103,7 +136,6 @@ func init() {
 	dbMap.AddTableWithName(Role{}, "roles").SetKeys(true, "Id")
 	dbMap.AddTableWithName(RoleGroup{}, "roles_group")
 	dbMap.AddTableWithName(User{}, "users").SetKeys(true, "Id")
-	dbMap.AddTableWithName(UserRole{}, "users_roles")
 }
 
 func checkErr(err error, msg string) {
@@ -218,6 +250,35 @@ func Role_ListByAppId(appId string) []Role {
 
 	return apps
 }
+func Roles_ListByUserAndApp(appId int, userId int) []UserRoleAssignmentVW {
+	var ret []UserRoleAssignmentVW
+	sql := `select assigned, user_id, role_id, name, application_id
+from (
+	select true as assigned, ur.user_id as user_id, r.id as role_id, r.name, r.application_id
+	from users_roles ur, roles r
+	where ur.role_id = r.id    and 
+		ur.user_id = $1        and 
+		r.application_id = $2  and
+		r.enabled = true
+	union all
+	select false assigned, null, r.id as role_id, r.name, r.application_id 
+	from roles r where r.id not in (select role_id from users_roles ur where ur.user_id = $1) and 
+			   r.application_id = $2  and
+			   r.enabled = true
+ ) usr_rol_assigments
+order by 1 desc;`
+
+	_, err := dbMap.Select(&ret, sql, userId, appId)
+	checkErr(err, "sql.Query usr_role_assignments by userId and appId")
+
+	return ret
+}
+
+//func Role_ListByUserId(userId) []UserRole {
+//	var apps []Role
+//	_, err := dbMap.Select(&apps, "select * from roles where application_id = $1 order by id", appId)
+//	checkErr(err, "sql.Query Role by appId")
+//}
 func User_List() []User {
 	var apps []User
 
